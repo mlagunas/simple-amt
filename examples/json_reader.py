@@ -1,22 +1,31 @@
 import json
 
 
-# "assignment_id": "3WT783CTPCNF1LH4326JNR8D4JQCBE",
-# "output": [
-#     "image_url": "http://www.wired.com/images_blogs/photos/uncategorized/2008/03/04/puppy.jpg",
-#     "description": "White dog on the grass"
-# ,
-#     "image_url": "http://cdn.cutestpaw.com/wp-content/uploads/2011/11/Puppy-Power-l.jpg",
-#     "description": "Black yorkshire with a white t-shirt"
-# ],
-# "worker_id": "A1U9ICW77279OX",
-# "hit_id": "3P888QFVX301RWI2MM7YPW1D2Y2QOE"
+# {
+#     "assignment_id": "33CUSNVVNOIUNKTKJE64U3MT6MQ88B",
+#     "output": [{
+#         "time_used": 4751,
+#         "selection": 3,
+#         "triplet_id": 0
+#     }, {
+#         "time_used": 3159,
+#         "selection": 3,
+#         "triplet_id": 1
+#     }, {
+#         "time_used": 3311,
+#         "selection": 3,
+#         "triplet_id": 2
+#     }],
+#     "worker_id": "A1U9ICW77279OX",
+#     "hit_id": "3Y40HMYLL1OGDY3B4MEZIAPVHPXXUJ"
+# }
 
 
 
 i = 0
-file = "image_sentence/results.json"
-with open(file) as f:
+fi = "image_sentence/results.json"
+data = {}
+with open(fi) as f:
     for line in f:
         while True:
             try:
@@ -29,5 +38,9 @@ with open(file) as f:
                 line += next(f)
 
         # do something with jfile
+for i in range(len(data)):
+    res = data[i]["output"]
+    for j in range(len(res)):
 
-print(data[0]["assignment_id"])
+
+assignments_id = data[:]["assignment_id"]
