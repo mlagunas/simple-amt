@@ -1,163 +1,264 @@
 <html>
-  <head>
-    <title>Write sentences to describe images</title>
+
+<head>
+    <title>Select the most similar icon</title>
     <!-- simpleamt depends on these libraries -->
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>    
+    <script src='//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
     <!-- end of required libraries -->
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      #text-area {
-        margin: 10px 0;
-        font-size: 24pt;
-      }
-      #button-div {
-        margin-bottom: 10px;
-      }
-      #counter {
-        margin: 0 10px;
-        font-size: 20pt;
-        font-weight: bold;
-      }
-      img {
-        height: 600px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class='container'>
-      <h2>Write a sentence to describe each image</h2>
-    </div>
+        #text-area {
+            margin: 10px 0;
+            font-size: 24pt;
+        }
 
+        #button-div {
+            margin-bottom: 10px;
+        }
+
+        #counter {
+            margin: 0 10px;
+            font-size: 20pt;
+            font-weight: bold;
+        }
+
+        img {
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='container'>
+        <h1>Some title...</h1>
+    </div>
     <div class='container-fluid'>
-      <div class='row'>
-        <div class='col-xs-12 text-center'>
-          <div id='image-container'>
-          </div>
+        <div class='row' style="margin-top : 75px">
+            <div class='col-xs-12 text-center'>
+                <div id='text-container1'>
+                </div>
+                <div id='image-container1'>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class='row'>
-        <div class='col-xs-4 col-xs-offset-4'>
-          <textarea id='text-area' class='form-control tb-margin' disabled></textarea>
-        </div>
-        <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
-          <button id='prev-btn' class='btn btn-lg btn-primary' disabled>Back</button>
-          <span id='counter'>
+        <form id="myForm">
+            <div class='row' style="margin-bottom : 50px; margin-top : 50px">
+                <div class='col-xs-12 text-center'>
+                    <div class='col-xs-push-3 col-xs-3 text-center'>
+                        <div id='text-container2'>
+                        </div>
+                        <div id='image-container2'>
+                        </div>
+                        <div id='radio-container2'>
+                        </div>
+                    </div>
+                    <div class='col-xs-push-3 col-xs-3 text-center'>
+                        <div id='text-container=3'>
+                        </div>
+                        <div id='image-container3'>
+                        </div>
+                        <div id='radio-container3'>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class='row'>
+            <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
+                <button id='prev-btn' class='btn btn-lg btn-primary' disabled>Back</button>
+                <span id='counter'>
             <span class='counter-top'></span> / <span class='counter-bottom'></span>
-          </span>
-          <button id='next-btn' class='btn btn-lg btn-primary' disabled>Next</button>
+                </span>
+                <button id='next-btn' class='btn btn-lg btn-primary' disabled>Next</button>
+            </div>
         </div>
-      </div>
     </div>
 
     {% include "simpleamt.html" %}
-
     <script>
-      $(function() {
+        $(function() {
+            var t0 = 0
+            var t1 = 0;
+            // Parallel to input
+            var answers = [];
+            var time = [];
+            // Define some default input.
+            var ID_INPUT = [];
+            var DEFAULT_INPUT = [
+                    ["/examples/images/101250.png", "/examples/images/101258.png", "/examples/images/101258.png"],
+                    ["/examples/images/101258.png", "/examples/images/101250.png", "/examples/images/101250.png"],
+                    ["/examples/images/101258.png", "/examples/images/101250.png", "/examples/images/101262.png"]
+                ]
+                // var DEFAULT_INPUT = [
+                //     [
+                //         '/examples/images/101250.png',
+                //         '/examples/images/101258.png',
+                //         '/examples/images/101258.png',
+                //     ],
+                //     [
+                //         '/examples/images/101258.png',
+                //         '/examples/images/101250.png',
+                //         '/examples/images/101250.png',
+                //     ]
+                // ];
 
-        // Define some default input.
-        var DEFAULT_INPUT = [
-          'http://samsuria.com/wp-content/uploads/2014/10/cute-cat-wallpapers.jpg',
-          'http://stuffpoint.com/cats/image/41633-cats-cute-cat.jpg',
-        ];
+            var input = null;
 
-        var input = null;
+            // Some variables to track state of the HIT.
+            var idx = 0;
+            var enabled = false;
 
-        // Descriptions of images, parallel to input.
-        var descriptions = [];
+            function main() {
+                // If this is a HIT on AMT, then replace the default input with the real input.
+                input = simpleamt.getInput(DEFAULT_INPUT);
+                console.log("input retrieved")
+                    // Enable the UI if the HIT is not in preview mode.
+                if (!simpleamt.isPreview()) {
+                    enable_hit();
+                }
+                console.log("hit enabled")
 
-        // Some variables to track state of the HIT.
-        var idx = 0;
-        var enabled = false;
+                var index = 0;
+                // Set up the descriptions.
+                _.each(input, function() {
+                    answers.push('');
+                    time.push(0);
+                    ID_INPUT.push(index);
+                    index += 1;
+                });
+                console.log("initialized tables")
 
-        function main() {
-          // If this is a HIT on AMT, then replace the default input with the real input.
-          input = simpleamt.getInput(DEFAULT_INPUT);
-
-          // Enable the UI if the HIT is not in preview mode.
-          if (!simpleamt.isPreview()) {
-            enable_hit();
-          }
-
-          // Set up the descriptions.
-          _.each(input, function() { descriptions.push(''); });
-
-          // Preload all images
-          var imgs = [];
-          _.each(input, function(img_url) {
-            var img = new Image();
-            img.onload = function() { console.log('loaded image from ' + img_url); };
-            img.src = img_url;
-          });
-
-          render();
-        }
-
-        // Use the current index to update the image and description
-        function render() {
-          // Set up the image
-          $('#image-container').empty();
-          $('<img>').attr('src', input[idx]).appendTo($('#image-container'));
-
-          // Set up the text area
-          $('#text-area').val(descriptions[idx]);
-
-          // Refresh the counter
-          $('.counter-top').text(idx + 1);
-          $('.counter-bottom').text(input.length);
-
-          // If the UI is enabled, enable or disable the buttons depending on
-          // the index.
-          if (enabled) {
-            var prev_btn = $('#prev-btn');
-            var next_btn = $('#next-btn');
-            prev_btn.prop('disabled', true);
-            next_btn.prop('disabled', true);
-            if (idx > 0) {
-              prev_btn.prop('disabled', false);
+                // Preload all images
+                var imgs = [];
+                _.each(input, function(img_url) {
+                    var img = new Image();
+                    img.onload = function() {};
+                    img.src = img_url;
+                });
+                console.log("initialized images")
+                render();
+                console.log("html rendered")
             }
-            if (idx < input.length - 1) next_btn.prop('disabled', false);
-          }
-        }
 
-        // Update the index, and save the text in the text area.
-        function set_idx(new_idx) {
-          if (new_idx < 0 || new_idx >= input.length) return;
-          descriptions[idx] = $('#text-area').val();
 
-          idx = new_idx;
-          render();
-        }
 
-        // Enable the UI.
-        function enable_hit() {
-          enabled = true;
+            // Use the current index to update the image and description
+            function render() {
+                // Set up the images
+                $('#image-container1').empty();
+                $('#text-container1').empty();
+                $('#text-container1').append('<h3> Reference Image </h3')
+                $('<img>').attr('src', input[idx][0]).appendTo($('#image-container1'));
 
-          // Enable components
-          $('#next-btn').click(function() { set_idx(idx + 1) });
-          $('#prev-btn').click(function() { set_idx(idx - 1) });
-          $('#text-area').prop('disabled', false);
-          $('#submit-btn').prop('disabled', false);
+                $('#image-container2').empty();
+                $('#radio-container2').empty();
+                $('<img>').attr('src', input[idx][1]).appendTo($('#image-container2'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb2').attr('value', 'A').appendTo($('#radio-container2'));
 
-          // Set up submit handler.
-          simpleamt.setupSubmit();
-          $('#submit-btn').click(function() {
-            descriptions[idx] = $('#text-area').val();
-            if (_.any(descriptions, function(d) { return d.length < 5; })) {
-              alert('Descriptions not long enough. Correct before submitting.');
-              return false;
+                $('#image-container3').empty();
+                $('#radio-container3').empty();
+                $('<img>').attr('src', input[idx][2]).appendTo($('#image-container3'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb3').attr('value', 'B').appendTo($('#radio-container3'));
+
+                // Set up the text area
+                // $('#text-area').val(descriptions[idx]);
+
+                // Refresh the counter
+                $('.counter-top').text(idx + 1);
+                $('.counter-bottom').text(input.length);
+
+                // If the UI is enabled, enable or disable the buttons depending on
+                // the index.
+                if (enabled) {
+
+                    var prev_btn = $('#prev-btn');
+                    var next_btn = $('#next-btn');
+                    var next = false
+                    prev_btn.prop('disabled', true);
+                    next_btn.prop('disabled', true);
+
+                    if (answers[idx] != null) {
+                        if (answers[idx] == 2) {
+                            $('#rb2').prop('checked', true)
+                        }
+                        if (answers[idx] == 3) {
+                            $('#rb3').prop('checked', true)
+                        }
+                    }
+                    $('#rb2').on('change', function() {
+                        next = true
+                        answers[idx] = 2
+                        if (idx < input.length - 1) {
+                            next_btn.prop('disabled', false);
+                        }
+                    })
+                    $('#rb3').on('change', function() {
+                        next = true
+                        answers[idx] = 3
+                        if (idx < input.length - 1) {
+                            next_btn.prop('disabled', false);
+                        }
+                    })
+                    if (idx > 0) {
+                        prev_btn.prop('disabled', false);
+                    }
+
+                }
+                t0 = new Date().getTime();
             }
-            var output = _.map(_.zip(input, descriptions), function(x) {
-              return {'image_url': x[0], 'description': x[1]};
-            });
-            simpleamt.setOutput(output);
-          });
-        }
 
-        main();
-      });
+            // Update the index, and save the text in the text area.
+            function set_idx(new_idx) {
+
+                if (new_idx < 0 || new_idx >= input.length) return;
+                // descriptions[idx] = $('#text-area').val();
+
+                idx = new_idx;
+                render();
+            }
+
+            // Enable the UI.
+            function enable_hit() {
+                enabled = true;
+
+                // Enable components
+                $('#next-btn').click(function() {
+                    t1 = new Date().getTime();
+                    time[idx] += t1 - t0;
+                    t0 = t1
+                    set_idx(idx + 1)
+                    console.log(time)
+                });
+                $('#prev-btn').click(function() {
+                    t0 = new Date().getTime();
+                    set_idx(idx - 1)
+                });
+
+                $('#submit-btn').prop('disabled', false);
+
+                // Set up submit handler.
+                simpleamt.setupSubmit();
+
+                $('#submit-btn').click(function() {
+                    var t1 = new Date().getTime();
+                    time[idx] = t1 - t0;
+                    console.log(answers)
+                    var output = _.map(_.zip(ID_INPUT, answers, time), function(x) {
+                        return {
+                            'triplet_id': x[0],
+                            'selection': x[1],
+                            'time_used': x[2]
+                        };
+                    });
+                    simpleamt.setOutput(output);
+                });
+            }
+            main();
+        });
     </script>
-  </body>
+</body>
+
 </html>
