@@ -1,2 +1,52 @@
-{"assignment_id": "3RKNTXVS3N47N7ZX49059ICJUOT4A3", "output": [{"time_used": 2977, "selection": 2, "triplet_id": 0}, {"time_used": 2015, "selection": 2, "triplet_id": 1}], "worker_id": "A1U9ICW77279OX", "hit_id": "35U0MRQMUJDTW4EJ8L18VJ0LJRLOVC"}
-{"assignment_id": "32N49TQG3HO6HKICO51SI8CW78QAVL", "output": [{"time_used": 3720, "selection": 2, "triplet_id": 0}, {"time_used": 8967, "selection": 3, "triplet_id": 1}], "worker_id": "A1U9ICW77279OX", "hit_id": "3TY2U1TEB7G64YNSBJVKKZ85PA4JJ3"}
+{
+    "assignment_id": "33CUSNVVNOIUNKTKJE64U3MT6MQ88B",
+    "output": [{
+        "time_used": 4751,
+        "selection": 3,
+        "triplet_id": 0
+    }, {
+        "time_used": 3159,
+        "selection": 3,
+        "triplet_id": 1
+    }, {
+        "time_used": 3311,
+        "selection": 3,
+        "triplet_id": 2
+    }],
+    "worker_id": "A1U9ICW77279OX",
+    "hit_id": "3Y40HMYLL1OGDY3B4MEZIAPVHPXXUJ"
+} {
+    "assignment_id": "31QNSG6A5SZQN6O199EYG3QYV2K87O",
+    "output": [{
+        "time_used": 2146,
+        "selection": 3,
+        "triplet_id": 0
+    }, {
+        "time_used": 5799,
+        "selection": 2,
+        "triplet_id": 1
+    }, {
+        "time_used": 3942,
+        "selection": 3,
+        "triplet_id": 2
+    }],
+    "worker_id": "A1U9ICW77279OX",
+    "hit_id": "3L7SUC0TTU0P30SRS8Y6IMLQUW9M0L"
+} {
+    "assignment_id": "3L0KT67Y8FMRLAZBAGA3A7AWBVZYSE",
+    "output": [{
+        "time_used": 3076,
+        "selection": 3,
+        "triplet_id": 0
+    }, {
+        "time_used": 5671,
+        "selection": 3,
+        "triplet_id": 1
+    }, {
+        "time_used": 7095,
+        "selection": 3,
+        "triplet_id": 2
+    }],
+    "worker_id": "A1U9ICW77279OX",
+    "hit_id": "3IQ9O0AYW654NQZR5VOOA4GEAYMTIO"
+}
