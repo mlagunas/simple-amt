@@ -41,6 +41,6 @@ with open(fi) as f:
 for i in range(len(data)):
     res = data[i]["output"]
     for j in range(len(res)):
-
+data
 
 assignments_id = data[:]["assignment_id"]

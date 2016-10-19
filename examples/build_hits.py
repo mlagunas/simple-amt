@@ -43,22 +43,25 @@ dataset = torchfile.load("/home/mlagunas/TFM/DML_icons/data/icons_full.t7")
 dataset_easy = torchfile.load(
     "/home/mlagunas/TFM/DML_icons/data/icons_small.t7")
 n_hits = 3
-n_task = 5
+n_task = 4
 
 output = ""
-output_local = {}
+output_local = []
+for i in range(n_hits):
+    output_local.append(0)
 for j in range(n_hits):
     output += "["
     easy_sample = randint(n_task / 4 + 1, n_task / 4 * 3)
     aux = {}
+    aux["hit_id"] = ""
     aux["easy_sample"] = easy_sample
-    aux["triplet"] = []
+    aux["triplets"] = []
     for i in range(n_task):
         if i == easy_sample:  # Get easy sample for spammers
             ref_img, dis_img, sim_img = load_data(dataset_easy)
         else:
             ref_img, dis_img, sim_img = load_data(dataset)
-        aux["triplet"].append([ref_img, dis_img, sim_img])
+        aux["triplets"].append([ref_img, dis_img, sim_img])
         # Building the output
         if i == n_task - 1:
             output += "[ \"" + get_url(ref_img) + "\", \"" + \
@@ -69,7 +72,7 @@ for j in range(n_hits):
                 get_url(dis_img) + "\", \"" + get_url(sim_img) + "\"], "
     output_local[j] = aux
     output += "]\n"
-output_local
+
 # write file with the output generated
 f = open('image_sentence/inputs.json', 'w')
 f.write(output)  # python will convert \n to os.linesep
