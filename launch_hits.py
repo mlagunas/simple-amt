@@ -26,21 +26,10 @@ if __name__ == '__main__':
     env = simpleamt.get_jinja_env(args.config)
     template = env.get_template(args.html_template)
 
-    data = {}
-    i = 0
-    with open(local_data) as f:
-        for line in f:
-            while True:
-                try:
-                    jfile = json.loads(line)
-                    data[i] = jfile
-                    i += 1
-                    break
-                except ValueError:
-                    # Not yet a complete JSON value
-                    line += next(f)
-    data = data[0]
+    with open(local_data) as data_file:
+        data = json.load(data_file)
     hit_ids = []
+    
     for i, line in enumerate(args.input_json_file):
         hit_input = json.loads(line.strip())
 
@@ -66,13 +55,12 @@ if __name__ == '__main__':
         data[i]["hit_id"] = hit_id
         hit_ids.append(hit_id)
 
-
     # update local data
     with open(local_data, 'w') as outfile:
         json.dump(data, outfile)
 
     # TODO: Should the hit ids file be mandatory?
     if args.hit_ids_file is not None:
-      with open(args.hit_ids_file, 'w') as f:
-        for hit_id in hit_ids:
-          f.write('%s\n' % hit_id)
+        with open(args.hit_ids_file, 'w') as f:
+            for hit_id in hit_ids:
+                f.write('%s\n' % hit_id)

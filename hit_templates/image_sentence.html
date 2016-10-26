@@ -15,6 +15,15 @@
             font-size: 24pt;
         }
 
+        div.instructions {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: auto;
+            background-color: #eee;
+            width: 800px;
+            align-content: center;
+        }
+
         #button-div {
             margin-bottom: 10px;
         }
@@ -24,16 +33,66 @@
             font-size: 20pt;
             font-weight: bold;
         }
-
-        img {
-            height: 200px;
-        }
     </style>
 </head>
 
 <body>
     <div class='container'>
         <h1>Some title...</h1>
+    </div>
+    <div class='container-fluid'>
+        <div class="instructions">
+            <!--h2>Evaluation criteria</h2-->
+            <!--p class='question'>You will get paid 0.10$ if you complete corretly the batch of images. You will receive an additional bonus of 0.05$ if the 75% of your answers match with the popular answer. The test takes about 5 min.</p-->
+            <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
+
+            <h3>How to do the task</h3> In order to acomplish the following task succesfully you will have to imagine that you are designing a graphical user interface where you need to place a group of icons. You already have placed the <b>reference</b> icon and you need to place
+            another one whose style is visually similar to the style of the reference. Your task now is to select the image <b>A</b> or <b>B</b> regarding which one matches better with the <b>reference</b>. In some cases, neither <b>A</b> nor <b>B</b>            will seem visually similar to the <b>Reference</b>, in this scenario try to make the best choice you can.
+
+            <h3>Selection example</h3> Before beginning the survey we will show two basic examples of an icon selection task.
+
+            <p>- In <b>Example 1</b>,</p>
+            <!-- you should choose image A since both the <b>Reference</b> and <b>A</b> share similar style properties such as strong <u>color saturation</u>, 3D <u>perspective,</u> and the lack of <u>prominent contour lines or strokes</u>.
+                Note that both the <b>Reference</b> and <b>B</b> images are vehicles; but, since we focus on style, <b>A</b> is the correct choice. -->
+            <p>- In <b>Example 2,</b></p>
+            <!-- you should choose B, since both the <b>Reference</b> and <b>B</b> have <u>irregular contours</u>, <u>motion lines</u> suggesting motion, and <u>colors that  do not stay within the lines</u> of the figure. Both the <b>Reference</b>                and <b>A</b> are flags, but this does not affect the choice; we care only about style. </p> -->
+
+            <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br> For any comments or questions, please write an email to 504185@unizar.es<br><br> Press <i>Start</i> to begin the survey.
+            <div class="containerExamples" id="initialExamples">
+                <table class="images_examples">
+                    <tbody>
+                        <tr class="images_examples">
+                            <td class="images_examples">
+                                <img id="example1" alt="loading ..." class="images_examples" src="./example1.png">
+                            </td>
+
+                            <td class="images_examples">
+                                <img id="example2" alt="loading ..." class="images_examples" src="./example2.png">
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="containerExamples" id="moreExamples" style="display: none;">
+                <table class="images_examples">
+                    <tbody>
+                        <tr class="images_examples">
+                            <td class="images_examples">
+                                <img id="example1bis" alt="example1" class="images_examples" src="./example3.png">
+                            </td>
+
+                            <td class="images_examples">
+                                <img id="example2bis" alt="example2" class="images_examples" src="./example4.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="button" id="btn_examples" value="1" onclick="showMoreExamples()">Show more examples</button><br>
+        </div>
     </div>
     <div class='container-fluid'>
         <div class='row' style="margin-top : 75px">
@@ -44,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <form id="myForm">
+        <form id="selectionForm">
             <div class='row' style="margin-bottom : 50px; margin-top : 50px">
                 <div class='col-xs-12 text-center'>
                     <div class='col-xs-push-3 col-xs-3 text-center'>
@@ -56,7 +115,7 @@
                         </div>
                     </div>
                     <div class='col-xs-push-3 col-xs-3 text-center'>
-                        <div id='text-container=3'>
+                        <div id='text-container3'>
                         </div>
                         <div id='image-container3'>
                         </div>
@@ -150,17 +209,21 @@
                 // Set up the images
                 $('#image-container1').empty();
                 $('#text-container1').empty();
-                $('#text-container1').append('<h3> Reference Image </h3')
-                $('<img>').attr('src', input[idx][0]).appendTo($('#image-container1'));
+                $('#text-container1').append('<h3> Reference </h3>')
+                $('<img>').attr('src', input[idx][0]).attr('style', 'height: 100px').appendTo($('#image-container1'));
 
                 $('#image-container2').empty();
                 $('#radio-container2').empty();
-                $('<img>').attr('src', input[idx][1]).appendTo($('#image-container2'));
+                $('#text-container2').empty();
+                $('#text-container2').append('<h3> A </h3>')
+                $('<img>').attr('src', input[idx][1]).attr('style', 'height: 100px').appendTo($('#image-container2'));
                 $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb2').attr('value', 'A').appendTo($('#radio-container2'));
 
                 $('#image-container3').empty();
                 $('#radio-container3').empty();
-                $('<img>').attr('src', input[idx][2]).appendTo($('#image-container3'));
+                $('#text-container3').empty();
+                $('#text-container3').append('<h3> B </h3>')
+                $('<img>').attr('src', input[idx][2]).attr('style', 'height: 100px').appendTo($('#image-container3'));
                 $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb3').attr('value', 'B').appendTo($('#radio-container3'));
 
                 // Set up the text area

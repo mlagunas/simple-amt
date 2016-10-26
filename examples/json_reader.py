@@ -1,5 +1,20 @@
 import json
 
+def read_multiple_json(json_file):
+    data = {}
+    i = 0
+    with open(json_file) as f:
+        for line in f:
+            while True:
+                try:
+                    jfile = json.loads(line)
+                    data[i] = jfile
+                    i += 1
+                    break
+                except ValueError:
+                    # Not yet a complete JSON value
+                    line += next(f)
+    return data
 
 # {
 #     "assignment_id": "33CUSNVVNOIUNKTKJE64U3MT6MQ88B",
@@ -20,27 +35,10 @@ import json
 #     "hit_id": "3Y40HMYLL1OGDY3B4MEZIAPVHPXXUJ"
 # }
 
-
-
 i = 0
-fi = "image_sentence/results.json"
-data = {}
-with open(fi) as f:
-    for line in f:
-        while True:
-            try:
-                jfile = json.loads(line)
-                data[i] = jfile
-                i += 1
-                break
-            except ValueError:
-                # Not yet a complete JSON value
-                line += next(f)
+data_mturk = read_multiple_json("image_sentence/results.json")
+with open("image_sentence/inputs_local.json") as data_file:
+    data_local = json.load(data_file)
 
-        # do something with jfile
-for i in range(len(data)):
-    res = data[i]["output"]
-    for j in range(len(res)):
-data
-
-assignments_id = data[:]["assignment_id"]
+if data_mturk[1]["hit_id"] == data_local[1]["hit_id"]:
+    data_mturk[1]["output"][]
