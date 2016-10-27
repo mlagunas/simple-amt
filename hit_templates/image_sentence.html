@@ -66,11 +66,11 @@
                 <div id="initialExamples" class="row text-center" style="margin-top:30px;">
                     <div class='col-xs-12 text-center'>
                         <div class='col-xs-push-1 col-xs-3 text-center'>
-                            <img id="example1" style="width:300px; border: 1px solid #000; background-color:white;
-" src="../EXAMPLES/drawing.png">
+                            <img id="example1" style="width:300px; border: 1px solid #000; background-color:white;" src="https://raw.githubusercontent.com/mlagunas/simple-amt/master/EXAMPLES/drawing.png">
                         </div>
                         <div class='col-xs-push-3 col-xs-3 text-center'>
-                            <img id="example2" style="width:300px;height:300px;border: 1px solid #000;" src="https://raw.githubusercontent.com/mlagunas/simple-amt/master/EXAMPLES/drawing.png">
+
+                            <img id="example2" style="width:300px; height:300px; border: 1px solid #000; background-color:white;" src="https://raw.githubusercontent.com/mlagunas/simple-amt/master/EXAMPLES/drawing.png">
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
             </div>
         </div>
     </div>
-    <div id="triplet_show" class='container-fluid' style="display:none">
-        <div class='row' style="margin-top : 75px">
+    <div id="triplet_show" class='container-fluid' style="display:none;">
+        <div class='row' style="margin-top : 75px; ">
             <div class='col-xs-12 text-center'>
                 <div id='text-container1'>
                 </div>
@@ -92,7 +92,7 @@
         <form id="selectionForm">
             <div class='row' style="margin-bottom : 50px; margin-top : 30px">
                 <div class='col-xs-12 text-center'>
-                    <div class='col-xs-push-4 col-xs-3 text-center'>
+                    <div class='col-xs-push-4 col-xs-2 text-center'>
                         <div id='text-container2'>
                         </div>
                         <div id='image-container2'>
@@ -100,7 +100,7 @@
                         <div id='radio-container2'>
                         </div>
                     </div>
-                    <div class='col-xs-push-2 col-xs-3 text-center'>
+                    <div class='col-xs-push-4 col-xs-2 text-center'>
                         <div id='text-container3'>
                         </div>
                         <div id='image-container3'>
@@ -238,6 +238,7 @@
 
                     $('#btn_examples').click(function() {
                         $('#triplet_show').css("display", "block");
+                        $('#btn_examples').prop('disabled', true);
                     });
 
                     if (answers[idx] != null) {
