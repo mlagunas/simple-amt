@@ -38,7 +38,7 @@
 
 <body>
     <div class='container'>
-        <h1>Some title...</h1>
+        <h1>Icon selection</h1>
     </div>
     <div class='container-fluid'>
         <div class="col-md-12">
@@ -129,36 +129,41 @@
 
     <div id="training" class='container-fluid' style="display:none;">
         <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
-            <div class='col-xs-12 text-center'>
+            <div id="img1-div" class='col-xs-12 text-center'>
                 <div id='text-train-container1'>
                 </div>
                 <div id='image-train-container1'>
                 </div>
             </div>
         </div>
-        <form id="selectionForm">
-            <div class='row' style="margin-bottom : 50px; margin-top : 30px">
-                <div class='col-xs-12 text-center'>
-                    <div class='col-xs-push-4 col-xs-2 text-center'>
-                        <div id='text-train-container2'>
-                        </div>
-                        <div id='image-train-container2'>
-                        </div>
-                        <div id='radio-train-container2'>
-                        </div>
+        <div class='row' style="margin-bottom : 50px; margin-top : 30px">
+            <div class='col-xs-12 text-center'>
+                <div id="img2-div" class='col-xs-push-4 col-xs-2 text-center'>
+                    <div id='text-train-container2'>
                     </div>
-                    <div class='col-xs-push-4 col-xs-2 text-center'>
-                        <div id='text-train-container3'>
+                    <div id='image-train-container2'>
+                    </div>
+                    <div id='radio-train-container2'>
+                    </div>
+                </div>
+                <div id="img3-div" class='col-xs-push-4 col-xs-2 text-center'>
+                    <div id='text-train-container3'>
+                    </div>
+                    <div id='image-train-container3'>
+                    </div>
+                    <div id='radio-train-container3'>
+                    </div>
+                </div>
+                <div class='col-xs-push-4 col-xs-4 text-center'>
+                    <div id="suggestion-div" style="border-radius: 25px;border: 2px solid #DE0000;display:none;">
+                        <div id="suggestion-text">
                         </div>
-                        <div id='image-train-container3'>
-                        </div>
-                        <div id='radio-train-container3'>
-                        </div>
+                        <button id='continue-btn' style="margin-bottom:10px;" class='btn btn-lg btn-primary'>I got it</button>
                     </div>
                 </div>
             </div>
-        </form>
-        <div class='row'>
+        </div>
+        <div class='row' id="btn-train-div">
             <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
                 <button id='prev-train-btn' class='btn btn-lg btn-primary' disabled>Back</button>
                 <span id='counter'>
@@ -167,7 +172,7 @@
                 <button id='next-train-btn' class='btn btn-lg btn-primary' disabled>Next</button>
             </div>
         </div>
-        <div class='row'>
+        <div class='row' id="submit-train-div">
             <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div-submit' style='margin-bottom:50px;'>
                 <button id='submit-train-btn' class='btn btn-lg btn-primary' disabled>Start the test</button>
             </div>
@@ -183,6 +188,7 @@
             var answers = [];
             var TRAIN_CORRECT = ["B", "A", "B", "A"];
             var train_answer = ["", "", "", ""]
+            var train_suggest = ["", "", "", ""]
             var correct_train = 0;
             var time = [];
             // Define some default input.
@@ -237,7 +243,7 @@
                 var index = 0;
                 // Set up the descriptions.
                 _.each(input, function() {
-                    answers.push('');
+                    answers.push("");
                     time.push(0);
                     ID_INPUT.push(index);
                     index += 1;
@@ -333,13 +339,29 @@
                         $('#btn_examples').prop('disabled', true);
                     });
 
-                    if (answers[idx] != null) {
+                    if (answers[idx] != "") {
                         if (answers[idx] == 2) {
                             $('#rb2').prop('checked', true)
                         }
                         if (answers[idx] == 3) {
                             $('#rb3').prop('checked', true)
                         }
+                        if (idx < input.length - 1) {
+                            next_btn.prop('disabled', false);
+                        }
+                    }
+
+                    if (train_answer[idxt] != "") {
+                        if (train_answer[idxt] == "A") {
+                            $('#rbt2').prop('checked', true)
+                        }
+                        if (train_answer[idxt] == "B") {
+                            $('#rbt3').prop('checked', true)
+                        }
+                        if (idxt < TRAIN_INPUT.length - 1) {
+                            next_btn_train.prop('disabled', false);
+                        }
+
                     }
 
                     $('#rb2').on('change', function() {
@@ -377,7 +399,8 @@
                     if (idx > 0) {
                         prev_btn.prop('disabled', false);
                     }
-                    if (idxt > 0 && idxt < TRAIN_INPUT.length) {
+
+                    if (idxt > 0) {
                         prev_btn_train.prop('disabled', false);
                     }
 
@@ -434,15 +457,47 @@
                     set_idx(idx + 1)
                     console.log(time)
                 });
+
                 $('#prev-btn').click(function() {
                     t0 = new Date().getTime();
                     set_idx(idx - 1)
                 });
 
+                $('#continue-btn').click(function() {
+                    $('#suggestion-text').empty();
+                    $('#suggestion-div').css("display", "none");
+                    $('#img1-div').css("opacity", "1");
+                    $('#img2-div').css("opacity", "1");
+                    $('#img3-div').css("opacity", "1");
+                    $('#btn-train-div').css("opacity", "1");
+                    $('#submit-train-div').css("opacity", "1");
+                    $('#img1-div').css("pointer-events", "auto");
+                    $('#img2-div').css("pointer-events", "auto");
+                    $('#img3-div').css("pointer-events", "auto");
+                    $('#btn-train-div').css("pointer-events", "auto");
+                    $('#submit-train-div').css("pointer-events", "auto");
+                });
+
                 // Enable components
                 $('#next-train-btn').click(function() {
-                    set_idxt(idxt + 1)
+                    if (TRAIN_CORRECT[idxt] != train_answer[idxt]) {
+                        $('#suggestion-div').css("display", "block");
+                        $('#suggestion-text').append('<h3> Probando la text_suggestion </h3><p>holeholehooooole</p>')
+                        $('#img1-div').css("opacity", "0.3");
+                        $('#img2-div').css("opacity", "0.3");
+                        $('#img3-div').css("opacity", "0.3");
+                        $('#btn-train-div').css("opacity", "0.3");
+                        $('#submit-train-div').css("opacity", "0.3");
+                        $('#img1-div').css("pointer-events", "none");
+                        $('#img2-div').css("pointer-events", "none");
+                        $('#img3-div').css("pointer-events", "none");
+                        $('#btn-train-div').css("pointer-events", "none");
+                        $('#submit-train-div').css("pointer-events", "none");
+                    } else {
+                        set_idxt(idxt + 1)
+                    }
                 });
+
                 $('#prev-train-btn').click(function() {
                     set_idxt(idxt - 1)
                 });
@@ -450,6 +505,7 @@
                 // Set up submit handler.
                 simpleamt.setupSubmit();
                 var acc = -1;
+
                 $('#submit-train-btn').click(function() {
                     acc = get_accuracy()
                     alert("The test will start once this window is closed, get ready.\n" + acc + "/4")
