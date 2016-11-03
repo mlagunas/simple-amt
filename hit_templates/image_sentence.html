@@ -45,16 +45,14 @@
             <div class="instructions" style="overflow: hidden;margin-bottom:25px ">
                 <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
 
-                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to imagine that you are designing a graphical user interface where you need to place a group of icons. You already have placed the reference icon and you need to place
-                another one whose style is visually similar to the style of the reference. Your task now is to select the image A or B regarding which one matches better with the reference. In some cases, neither A nor B will seem visually similar to
+                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to imagine that you are designing a graphical user interface where you need to place a group of icons. You already have placed the reference icon and you need to place another one whose style is visually similar to the style of the reference. Your task now is to select the image A or B regarding which one matches better with the reference. In some cases, neither A nor B will seem visually similar to
                 the Reference, in this scenario try to make the best choice you can.
 
                 <h3>Selection example</h3> Before you begin the survey we will show you two basic examples of an icon selection task with the answers explained.
 
-                <p>- In <b>Example 1</b> the correct option will be A. The icon A has no contour lines, and it is a solid icon filled in dark colour, exactly as the reference. The icon B is not filled in and it has a medium-thick contour line, not matching
-                    in style with the reference. The icon B and the Reference have the same arrow shape, but we are focusing on style consequently it will not affect the decision.</p>
+                <p>- In <b>Example 1</b> the correct option will be A. The icon A has no contour lines, and it is a solid icon coloured with black, exactly as the reference. The icon B is not a solid icon and it has a medium-thick contour line, not matching in style with the reference. The icon B and the Reference have the same arrow shape, but this survey is focusing on style consequently it will not affect the decision.</p>
 
-                <p>- In <b>Example 2</b>, the correct option will be A. The icon A has a thin contour line and it is not filled in, sharing these style properties with the Reference. The icon B is not filled in but its contour lines are really thick which
+                <p>- In <b>Example 2</b>, the correct option will be A. The icon A has a thin contour line and it is not a solid icon, sharing these style properties with the Reference. The icon B is not solid but its contour lines are really thick which
                     is the opposite as the Reference's contour lines.</p>
 
                 <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br> In case you have any comments or questions, please write an email to <a href="mailto:504185@unizar.es">504185@unizar.es</a><br><br> Press <i>Start</i>                to begin the survey.
@@ -172,11 +170,6 @@
                 <button id='next-train-btn' class='btn btn-lg btn-primary' disabled>Next</button>
             </div>
         </div>
-        <div class='row' id="submit-train-div">
-            <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div-submit' style='margin-bottom:50px;'>
-                <button id='submit-train-btn' class='btn btn-lg btn-primary' disabled>Start the test</button>
-            </div>
-        </div>
     </div>
 
     {% include "simpleamt.html" %}
@@ -188,7 +181,8 @@
             var answers = [];
             var TRAIN_CORRECT = ["B", "A", "B", "A"];
             var train_answer = ["", "", "", ""]
-            var train_suggest = ["", "", "", ""]
+            var train_error = [false, false, false, false]
+            var train_suggest = ["Are you sure this is the right answer?<br> If you have a look at the icon A and the Reference you can see that the first one is an icon with contour lines", "", "", ""]
             var correct_train = 0;
             var time = [];
             // Define some default input.
@@ -358,7 +352,7 @@
                         if (train_answer[idxt] == "B") {
                             $('#rbt3').prop('checked', true)
                         }
-                        if (idxt < TRAIN_INPUT.length - 1) {
+                        if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
                         }
 
@@ -383,7 +377,7 @@
                     $('#rbt2').on('change', function() {
                         next = true
                         train_answer[idxt] = "A"
-                        if (idxt < TRAIN_INPUT.length - 1) {
+                        if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
                         }
                     })
@@ -391,7 +385,7 @@
                     $('#rbt3').on('change', function() {
                         next = true
                         train_answer[idxt] = "B"
-                        if (idxt < TRAIN_INPUT.length - 1) {
+                        if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
                         }
                     })
@@ -408,9 +402,6 @@
                         $('#submit-btn').prop('disabled', false);
                     }
 
-                    if (idxt + 1 == TRAIN_INPUT.length) {
-                        $('#submit-train-btn').prop('disabled', false);
-                    }
                 }
                 t0 = new Date().getTime();
             }
@@ -418,7 +409,7 @@
             function get_accuracy() {
                 var acc = 0;
                 for (i = 0; i < train_answer.length; i++) {
-                    if (TRAIN_CORRECT[i] == train_answer[i]) {
+                    if (!train_error[idxt]) {
                         acc++;
                     }
                 }
@@ -470,30 +461,33 @@
                     $('#img2-div').css("opacity", "1");
                     $('#img3-div').css("opacity", "1");
                     $('#btn-train-div').css("opacity", "1");
-                    $('#submit-train-div').css("opacity", "1");
                     $('#img1-div').css("pointer-events", "auto");
                     $('#img2-div').css("pointer-events", "auto");
                     $('#img3-div').css("pointer-events", "auto");
                     $('#btn-train-div').css("pointer-events", "auto");
-                    $('#submit-train-div').css("pointer-events", "auto");
                 });
 
                 // Enable components
                 $('#next-train-btn').click(function() {
                     if (TRAIN_CORRECT[idxt] != train_answer[idxt]) {
+                        train_error[idxt] = true
                         $('#suggestion-div').css("display", "block");
                         $('#suggestion-text').append('<h3> Probando la text_suggestion </h3><p>holeholehooooole</p>')
                         $('#img1-div').css("opacity", "0.3");
                         $('#img2-div').css("opacity", "0.3");
                         $('#img3-div').css("opacity", "0.3");
                         $('#btn-train-div').css("opacity", "0.3");
-                        $('#submit-train-div').css("opacity", "0.3");
                         $('#img1-div').css("pointer-events", "none");
                         $('#img2-div').css("pointer-events", "none");
                         $('#img3-div').css("pointer-events", "none");
                         $('#btn-train-div').css("pointer-events", "none");
-                        $('#submit-train-div').css("pointer-events", "none");
                     } else {
+                        if (idxt + 1 == TRAIN_CORRECT.length) {
+                            acc = get_accuracy();
+                            alert("The test will start once this window is closed, get ready.\n" + acc + "/4");
+                            $('#training').css("display", "none");
+                            $('#triplet_show').css("display", "block");
+                        }
                         set_idxt(idxt + 1)
                     }
                 });
@@ -505,13 +499,6 @@
                 // Set up submit handler.
                 simpleamt.setupSubmit();
                 var acc = -1;
-
-                $('#submit-train-btn').click(function() {
-                    acc = get_accuracy()
-                    alert("The test will start once this window is closed, get ready.\n" + acc + "/4")
-                    $('#training').css("display", "none");
-                    $('#triplet_show').css("display", "block");
-                });
 
                 $('#submit-btn').click(function() {
                     var t1 = new Date().getTime();
