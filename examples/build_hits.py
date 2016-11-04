@@ -44,7 +44,7 @@ def load_data(ds):
     return ref_i, A_i, B_i
 
 # Get the data of the images, indexes, labels...
-offset = "https://raw.githubusercontent.com/mlagunas/simple-amt/master/FULL_ICONS/"
+offset = "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/"
 dataset = torchfile.load("/home/mlagunas/TFM/DML_icons/data/full-dataset.t7")
 data_train = dataset['train']
 data_test = dataset['test']
@@ -72,7 +72,6 @@ for j in range(n_hits):
     for i in range(n_randoms):
         rnd = randint(0, n_task-1) if n_randoms == 1 else randint(
             5, n_task / n_randoms)
-        print (rnd)
         random_index.insert(i, summ + rnd)
         summ += (n_task / n_randoms)
 
@@ -93,7 +92,6 @@ for j in range(n_hits):
             A_i = easy_triplets[rnd_idx][2]
             B_i = easy_triplets[rnd_idx][3]
             rnd_idx += 1
-            print ref_i, A_i, B_i
         else:
             ref_i, A_i, B_i = load_data(data_train)
         aux["triplets"].append([ref_i, A_i, B_i])

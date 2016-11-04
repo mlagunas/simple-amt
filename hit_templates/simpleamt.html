@@ -14,7 +14,6 @@
     function getInput(default_input) {
       if (typeof(default_input) === 'undefined') default_input = null;
       try {
-        console.log('image getInput ' + default_input);
         return JSON.parse($('#input').html());
       } catch (e) {
         return default_input;
