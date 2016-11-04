@@ -28,6 +28,10 @@
             margin-bottom: 10px;
         }
 
+        #button-div-train {
+            margin-bottom: 10px;
+        }
+
         #counter {
             margin: 0 10px;
             font-size: 20pt;
@@ -35,9 +39,8 @@
         }
     </style>
 </head>
-
 <body>
-    <div class='container'>
+    <div class='container text-center'>
         <h1>Icon selection</h1>
     </div>
     <div class='container-fluid'>
@@ -45,12 +48,14 @@
             <div class="instructions" style="overflow: hidden;margin-bottom:25px ">
                 <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
 
-                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to imagine that you are designing a graphical user interface where you need to place a group of icons. You already have placed the reference icon and you need to place another one whose style is visually similar to the style of the reference. Your task now is to select the image A or B regarding which one matches better with the reference. In some cases, neither A nor B will seem visually similar to
+                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to imagine that you are designing a graphical user interface where you need to place a group of icons. You already have placed the reference icon and you need to place
+                another one whose style is visually similar to the style of the reference. Your task now is to select the image A or B regarding which one matches better with the reference. In some cases, neither A nor B will seem visually similar to
                 the Reference, in this scenario try to make the best choice you can.
 
                 <h3>Selection example</h3> Before you begin the survey we will show you two basic examples of an icon selection task with the answers explained.
 
-                <p>- In <b>Example 1</b> the correct option will be A. The icon A has no contour lines, and it is a solid icon coloured with black, exactly as the reference. The icon B is not a solid icon and it has a medium-thick contour line, not matching in style with the reference. The icon B and the Reference have the same arrow shape, but this survey is focusing on style consequently it will not affect the decision.</p>
+                <p>- In <b>Example 1</b> the correct option will be A. The icon A has no contour lines, and it is a solid icon coloured with black, exactly as the reference. The icon B is not a solid icon and it has a medium-thick contour line, not matching
+                    in style with the reference. The icon B and the Reference have the same arrow shape, but this survey is focusing on style consequently it will not affect the decision.</p>
 
                 <p>- In <b>Example 2</b>, the correct option will be A. The icon A has a thin contour line and it is not a solid icon, sharing these style properties with the Reference. The icon B is not solid but its contour lines are really thick which
                     is the opposite as the Reference's contour lines.</p>
@@ -73,101 +78,98 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div id="triplet_show" class='container-fluid' style="display:none;">
-        <div class='row' style="margin-top : 25px; margin-bottom:25px; ">
-            <div class='col-xs-12 text-center'>
-                <div id='text-container1'>
-                </div>
-                <div id='image-container1'>
+        <div id="triplet_show" class='container-fluid' style="display:none;">
+            <div class='row' style="margin-top : 25px; margin-bottom:25px; ">
+                <div class='col-xs-12 text-center'>
+                    <div id='text-container1'>
+                    </div>
+                    <div id='image-container1'>
+                    </div>
                 </div>
             </div>
+            <form id="selectionForm">
+                <div class='row' style="margin-bottom : 50px; margin-top : 30px">
+                    <div class='col-xs-12 text-center'>
+                        <div class='col-xs-push-4 col-xs-2 text-center'>
+                            <div id='text-container2'>
+                            </div>
+                            <div id='image-container2'>
+                            </div>
+                            <div id='radio-container2'>
+                            </div>
+                        </div>
+                        <div class='col-xs-push-4 col-xs-2 text-center'>
+                            <div id='text-container3'>
+                            </div>
+                            <div id='image-container3'>
+                            </div>
+                            <div id='radio-container3'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class='row'>
+                <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
+                    <button id='prev-btn' class='btn btn-lg btn-primary' disabled>Back</button>
+                    <span id='counter'>
+            <span class='counter-top'></span> / <span class='counter-bottom'></span>
+                    </span>
+                    <button id='next-btn' class='btn btn-lg btn-primary' disabled>Next</button>
+                </div>
+            </div>
+            <div class='row'>
+                <form id='results-form' method='post' action='dummy' class='text-center'>
+                    <input type='hidden' value='' name='assignmentId' id='assignmentId' />
+                    <input type='hidden' value='' name='output' id='output' />
+                    <input type='submit' class='btn btn-lg btn-success' id='submit-btn' value='Submit' disabled />
+                </form>
+            </div>
         </div>
-        <form id="selectionForm">
+        <div id="training" class='container-fluid' style="display:none;">
+            <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
+                <div id="img1-div" class='col-xs-12 text-center'>
+                    <div id='text-train-container1'>
+                    </div>
+                    <div id='image-train-container1'>
+                    </div>
+                </div>
+            </div>
             <div class='row' style="margin-bottom : 50px; margin-top : 30px">
                 <div class='col-xs-12 text-center'>
-                    <div class='col-xs-push-4 col-xs-2 text-center'>
-                        <div id='text-container2'>
+                    <div id="img2-div" class='col-xs-push-4 col-xs-2 text-center'>
+                        <div id='text-train-container2'>
                         </div>
-                        <div id='image-container2'>
+                        <div id='image-train-container2'>
                         </div>
-                        <div id='radio-container2'>
+                        <div id='radio-train-container2'>
                         </div>
                     </div>
-                    <div class='col-xs-push-4 col-xs-2 text-center'>
-                        <div id='text-container3'>
+                    <div id="img3-div" class='col-xs-push-4 col-xs-2 text-center'>
+                        <div id='text-train-container3'>
                         </div>
-                        <div id='image-container3'>
+                        <div id='image-train-container3'>
                         </div>
-                        <div id='radio-container3'>
+                        <div id='radio-train-container3'>
+                        </div>
+                    </div>
+                    <div class='col-xs-push-4 col-xs-4 text-center'>
+                        <div id="suggestion-div" style="border-radius: 25px;border: 2px solid #DE0000;display:none;">
+                            <div id="suggestion-text">
+                            </div>
+                            <button id='continue-btn' style="margin-bottom:10px;" class='btn btn-lg btn-primary'>I got it</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
-        <div class='row'>
-            <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
-                <button id='prev-btn' class='btn btn-lg btn-primary' disabled>Back</button>
-                <span id='counter'>
-            <span class='counter-top'></span> / <span class='counter-bottom'></span>
-                </span>
-                <button id='next-btn' class='btn btn-lg btn-primary' disabled>Next</button>
-            </div>
-        </div>
-        <div class='row'>
-            <form id='results-form' method='post' action='dummy' class='text-center'>
-                <input type='hidden' value='' name='assignmentId' id='assignmentId' />
-                <input type='hidden' value='' name='output' id='output' />
-                <input type='submit' class='btn btn-lg btn-success' id='submit-btn' value='Submit' disabled />
-            </form>
-        </div>
-    </div>
-
-
-
-    <div id="training" class='container-fluid' style="display:none;">
-        <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
-            <div id="img1-div" class='col-xs-12 text-center'>
-                <div id='text-train-container1'>
+            <div class='row' id="btn-train-div">
+                <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div-train'>
+                    <button id='prev-train-btn' class='btn btn-lg btn-primary' disabled>Back</button>
+                    <span id='counter-train'>
+            <span class='counter-top'></span> / <span class='counter-train-bot'></span>
+                    </span>
+                    <button id='next-train-btn' class='btn btn-lg btn-primary' disabled>Next</button>
                 </div>
-                <div id='image-train-container1'>
-                </div>
-            </div>
-        </div>
-        <div class='row' style="margin-bottom : 50px; margin-top : 30px">
-            <div class='col-xs-12 text-center'>
-                <div id="img2-div" class='col-xs-push-4 col-xs-2 text-center'>
-                    <div id='text-train-container2'>
-                    </div>
-                    <div id='image-train-container2'>
-                    </div>
-                    <div id='radio-train-container2'>
-                    </div>
-                </div>
-                <div id="img3-div" class='col-xs-push-4 col-xs-2 text-center'>
-                    <div id='text-train-container3'>
-                    </div>
-                    <div id='image-train-container3'>
-                    </div>
-                    <div id='radio-train-container3'>
-                    </div>
-                </div>
-                <div class='col-xs-push-4 col-xs-4 text-center'>
-                    <div id="suggestion-div" style="border-radius: 25px;border: 2px solid #DE0000;display:none;">
-                        <div id="suggestion-text">
-                        </div>
-                        <button id='continue-btn' style="margin-bottom:10px;" class='btn btn-lg btn-primary'>I got it</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='row' id="btn-train-div">
-            <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
-                <button id='prev-train-btn' class='btn btn-lg btn-primary' disabled>Back</button>
-                <span id='counter'>
-            <span class='counter-train-top'></span> / <span class='counter-train-bot'></span>
-                </span>
-                <button id='next-train-btn' class='btn btn-lg btn-primary' disabled>Next</button>
             </div>
         </div>
     </div>
@@ -182,7 +184,10 @@
             var TRAIN_CORRECT = ["B", "A", "B", "A"];
             var train_answer = ["", "", "", ""]
             var train_error = [false, false, false, false]
-            var train_suggest = ["Are you sure this is the right answer?<br> If you have a look at the icon A and the Reference you can see that the first one is an icon with contour lines", "", "", ""]
+            var train_suggest = [
+                "<div style='padding:5px;'><h3>Are you sure this is the right answer?</h3><p> Look carefully at each icon and compare it with the reference, as a suggestion I would recommend you to compare the contour lines and to check if they are solid icons.</p> </div>",
+                "", "", ""
+            ]
             var correct_train = 0;
             var time = [];
             // Define some default input.
@@ -227,7 +232,7 @@
             function main() {
                 // If this is a HIT on AMT, then replace the default input with the real input.
                 input = simpleamt.getInput(DEFAULT_INPUT);
-                console.log("input retrieved")
+                console.log("input retrieved");
                     // Enable the UI if the HIT is not in preview mode.
                 if (!simpleamt.isPreview()) {
                     enable_hit();
@@ -284,20 +289,20 @@
                 //TEST PART
                 $('#image-container1').empty();
                 $('#text-container1').empty();
-                $('#text-container1').append('<h3> Reference </h3>')
+                $('#text-container1').append('<h3> Reference </h3>');
                 $('<img>').attr('src', input[idx][0]).attr('style', 'height: 100px; border: 1px solid #000;').appendTo($('#image-container1'));
 
                 $('#image-container2').empty();
                 $('#radio-container2').empty();
                 $('#text-container2').empty();
-                $('#text-container2').append('<h3> A </h3>')
+                $('#text-container2').append('<h3> A </h3>');
                 $('<img>').attr('src', input[idx][1]).attr('style', 'height: 100px; border: 1px solid #000;').appendTo($('#image-container2'));
                 $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb2').attr('value', 'A').appendTo($('#radio-container2'));
 
                 $('#image-container3').empty();
                 $('#radio-container3').empty();
                 $('#text-container3').empty();
-                $('#text-container3').append('<h3> B </h3>')
+                $('#text-container3').append('<h3> B </h3>');
                 $('<img>').attr('src', input[idx][2]).attr('style', 'height: 100px; border: 1px solid #000;').appendTo($('#image-container3'));
                 $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb3').attr('value', 'B').appendTo($('#radio-container3'));
 
@@ -320,25 +325,25 @@
                     var prev_btn_train = $('#prev-train-btn');
                     var next_btn_train = $('#next-train-btn');
 
-                    var next = false
+                    var next = false;
 
                     prev_btn.prop('disabled', true);
                     next_btn.prop('disabled', true);
-                    next_btn_train.prop('disabled', true)
-                    prev_btn_train.prop('disabled', true)
+                    next_btn_train.prop('disabled', true);
+                    prev_btn_train.prop('disabled', true);
 
                     $('#btn_examples').click(function() {
                         $('#training').css("display", "block");
-                        $('#train-btn-div').css("display", "none")
+                        $('#train-btn-div').css("display", "none");
                         $('#btn_examples').prop('disabled', true);
                     });
 
                     if (answers[idx] != "") {
                         if (answers[idx] == 2) {
-                            $('#rb2').prop('checked', true)
+                            $('#rb2').prop('checked', true);
                         }
                         if (answers[idx] == 3) {
-                            $('#rb3').prop('checked', true)
+                            $('#rb3').prop('checked', true);
                         }
                         if (idx < input.length - 1) {
                             next_btn.prop('disabled', false);
@@ -347,10 +352,10 @@
 
                     if (train_answer[idxt] != "") {
                         if (train_answer[idxt] == "A") {
-                            $('#rbt2').prop('checked', true)
+                            $('#rbt2').prop('checked', true);
                         }
                         if (train_answer[idxt] == "B") {
-                            $('#rbt3').prop('checked', true)
+                            $('#rbt3').prop('checked', true);
                         }
                         if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
@@ -359,23 +364,23 @@
                     }
 
                     $('#rb2').on('change', function() {
-                        next = true
-                        answers[idx] = 2
+                        next = true;
+                        answers[idx] = 2;
                         if (idx < input.length - 1) {
                             next_btn.prop('disabled', false);
                         }
                     })
 
                     $('#rb3').on('change', function() {
-                        next = true
-                        answers[idx] = 3
+                        next = true;
+                        answers[idx] = 3;
                         if (idx < input.length - 1) {
                             next_btn.prop('disabled', false);
                         }
                     })
 
                     $('#rbt2').on('change', function() {
-                        next = true
+                        next = true;
                         train_answer[idxt] = "A"
                         if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
@@ -383,8 +388,8 @@
                     })
 
                     $('#rbt3').on('change', function() {
-                        next = true
-                        train_answer[idxt] = "B"
+                        next = true;
+                        train_answer[idxt] = "B";
                         if (idxt < TRAIN_INPUT.length) {
                             next_btn_train.prop('disabled', false);
                         }
@@ -409,7 +414,7 @@
             function get_accuracy() {
                 var acc = 0;
                 for (i = 0; i < train_answer.length; i++) {
-                    if (!train_error[idxt]) {
+                    if (!train_error[i]) {
                         acc++;
                     }
                 }
@@ -444,14 +449,14 @@
                 $('#next-btn').click(function() {
                     t1 = new Date().getTime();
                     time[idx] += t1 - t0;
-                    t0 = t1
-                    set_idx(idx + 1)
-                    console.log(time)
+                    t0 = t1;
+                    set_idx(idx + 1);
+                    console.log(time);
                 });
 
                 $('#prev-btn').click(function() {
                     t0 = new Date().getTime();
-                    set_idx(idx - 1)
+                    set_idx(idx - 1);
                 });
 
                 $('#continue-btn').click(function() {
@@ -470,9 +475,9 @@
                 // Enable components
                 $('#next-train-btn').click(function() {
                     if (TRAIN_CORRECT[idxt] != train_answer[idxt]) {
-                        train_error[idxt] = true
+                        train_error[idxt] = true;
                         $('#suggestion-div').css("display", "block");
-                        $('#suggestion-text').append('<h3> Probando la text_suggestion </h3><p>holeholehooooole</p>')
+                        $('#suggestion-text').append(train_suggest[0]);
                         $('#img1-div').css("opacity", "0.3");
                         $('#img2-div').css("opacity", "0.3");
                         $('#img3-div').css("opacity", "0.3");
@@ -488,12 +493,13 @@
                             $('#training').css("display", "none");
                             $('#triplet_show').css("display", "block");
                         }
-                        set_idxt(idxt + 1)
+                        set_idxt(idxt + 1);
                     }
+                    console.log(train_error);
                 });
 
                 $('#prev-train-btn').click(function() {
-                    set_idxt(idxt - 1)
+                    set_idxt(idxt - 1);
                 });
 
                 // Set up submit handler.
@@ -503,7 +509,7 @@
                 $('#submit-btn').click(function() {
                     var t1 = new Date().getTime();
                     time[idx] = t1 - t0;
-                    console.log(answers)
+                    console.log(answers);
                     var output = _.map(_.zip(ID_INPUT, answers, time, acc), function(x) {
                         return {
                             'triplet_id': x[0],

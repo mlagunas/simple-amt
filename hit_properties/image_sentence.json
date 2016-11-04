@@ -1,10 +1,10 @@
 {
   "title": "Which image is more similar to the reference?",
   "description": "Decide which image is more similar to the Reference.",
-  "keywords": "image,images",
+  "keywords": "image, images, triplet, icons",
   "reward": 0.00,
-  "duration": 900,
-  "frame_height": 20000,
+  "duration": 300,
+  "frame_height": 2000,
   "max_assignments": 1,
   "country": "ES",
   "hits_approved": -1,
