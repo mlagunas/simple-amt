@@ -29,29 +29,35 @@ if __name__ == '__main__':
     with open(local_data) as data_file:
         data = json.load(data_file)
     hit_ids = []
-    
+
     for i, line in enumerate(args.input_json_file):
+
         hit_input = json.loads(line.strip())
 
         # In a previous version I removed all single quotes from the json dump.
         # TODO: double check to see if this is still necessary.
-        template_params = {'input': json.dumps(hit_input)}
+        template_params = {'input': json.dumps(
+            hit_input[1]), 'easy_q': json.dumps(hit_input[0])}
         html = template.render(template_params)
         html_question = HTMLQuestion(html, frame_height)
         hit_properties['question'] = html_question
 
-        # This error handling is kinda hacky.
-        # TODO: Do something better here.
-        launched = False
-        while not launched:
-            try:
-                print 'Trying to launch HIT %d' % (i + 1)
-                boto_hit = mtc.create_hit(**hit_properties)
-                launched = True
-            except MTurkRequestError as e:
-                print e
-        hit_id = boto_hit[0].HITId
-        # print data[0][i]
+        boto_hit = None
+        # # This error handling is kinda hacky.
+        # # TODO: Do something better here.
+        # launched = False
+        # while not launched:
+        #     try:
+        #         print 'Trying to launch HIT %d' % (i + 1)
+        #         boto_hit = mtc.create_hit(**hit_properties)
+        #         launched = True
+        #     except MTurkRequestError as e:
+        #         print e
+        if boto_hit == None:
+            hit_id = -1
+        else:
+            hit_id = boto_hit[0].HITId
+       # print data[0][i]
         data[i]["hit_id"] = hit_id
         hit_ids.append(hit_id)
 

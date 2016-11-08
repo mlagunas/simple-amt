@@ -70,7 +70,7 @@ for j in range(n_hits):
     random_index = []
     summ = 0
     for i in range(n_randoms):
-        rnd = randint(0, n_task-1) if n_randoms == 1 else randint(
+        rnd = randint(0, n_task - 1) if n_randoms == 1 else randint(
             5, n_task / n_randoms)
         random_index.insert(i, summ + rnd)
         summ += (n_task / n_randoms)
@@ -81,16 +81,28 @@ for j in range(n_hits):
     aux["hit_id"] = ""
     aux["easy_samples"] = random_index
     aux["triplets"] = []
+    answer = []
 
     # Configuration of the rndm easy triplets
     rnd_idx = 0
     nprnd.shuffle(easy_triplets)
+    output += "["
+
+    for i in range(len(random_index)):
+        if i == len(random_index) - 1:
+            output += str(random_index[i])
+        else:
+            output += str(random_index[i]) + ","
+
+    output += "], ["
 
     for i in range(n_task):
         if i in random_index:  # Get easy sample for spammers
+            ans = easy_triplets[rnd_idx][0]
             ref_i = easy_triplets[rnd_idx][1]
             A_i = easy_triplets[rnd_idx][2]
             B_i = easy_triplets[rnd_idx][3]
+            answer.append(ans)
             rnd_idx += 1
         else:
             ref_i, A_i, B_i = load_data(data_train)
@@ -102,8 +114,16 @@ for j in range(n_hits):
         else:
             output += "[\" " + get_url(ref_i) + "\", \"" + \
                 get_url(A_i) + "\", \"" + get_url(B_i) + "\"], "
+
+    output += "], ["
+    for i in range(len(answer)):
+        if i == len(answer) - 1:
+            output += "\"" + answer[i] + "\""
+        else:
+            output += "\"" + answer[i] + "\"" + ","
+
     output_local[j] = aux
-    output += "]\n"
+    output += "]]\n"
 
 # write file with the output generated
 f = open('image_sentence/inputs.json', 'w')

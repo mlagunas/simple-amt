@@ -19,6 +19,7 @@ def process_assignments(mtc, hit_id):
             results.append({
                 'assignment_id': a.AssignmentId,
                 'train_acc' : a.answers[0][1].fields[0],
+                'esay_acc' : a.answers[0][2].fields[0]
                 'hit_id': hit_id,
                 'worker_id': a.WorkerId,
                 'output': json.loads(a.answers[0][0].fields[0]),

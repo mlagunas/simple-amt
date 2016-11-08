@@ -1,47 +1,67 @@
 <script type='text/json' id='input'>
-  {{ input }}
+    {{input}}
 </script>
-
+<script type='text/json' id='easy_q'>
+    {{easy_q}}
+</script>
+<script type='text/json' id='answer_q'>
+    {{easy_q}}
+</script>
 <script>
-  var simpleamt = (function() {
+    var simpleamt = (function() {
 
-    // Copied from http://james.padolsey.com/javascript/bujs-1-getparameterbyname/
-    function getUrlParam(name) {
-      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-      return match ? decodeURIComponent(match[1].replace(/\+/g, ' ')) : null;
-    }
+        // Copied from http://james.padolsey.com/javascript/bujs-1-getparameterbyname/
+        function getUrlParam(name) {
+            var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+            return match ? decodeURIComponent(match[1].replace(/\+/g, ' ')) : null;
+        }
 
-    function getInput(default_input) {
-      if (typeof(default_input) === 'undefined') default_input = null;
-      try {
-        return JSON.parse($('#input').html());
-      } catch (e) {
-        return default_input;
-      }
-    }
+        function getInput(default_input) {
+            if (typeof(default_input) === 'undefined') default_input = null;
+            try {
+                ipt = JSON.parse($('#input').html());
+                idx = JSON.parse($('#easy_q').html());
+                adx = JSON.parse($('#answer_q').html());
+                return [ipt, idx, adx]
 
-    function setOutput(output) {
-      $('#output').val(JSON.stringify(output));
-    }
+            } catch (e) {
+                alert(e + " " + $('#input').html()); //error in the above string(in this case,yes)!
+                return default_input;
+            }
+        }
 
-    function isPreview() {
-      var assignment_id = getUrlParam('assignmentId');
-      if (assignment_id === null) return false;
-      return assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE';
-    }
+        function getInputLab(default_input, num) {
+            if (typeof(default_input) === 'undefined') default_input = null;
+            try {
+                return JSON.parse($('#input').html());
+            } catch (e) {
+                console.log(e)
+                return default_input;
+            }
+        }
 
-    function setupSubmit() {
-      var submit_to = getUrlParam('turkSubmitTo');
-      $('#results-form').attr('action', submit_to + '/mturk/externalSubmit');
-      $('#assignmentId').val(getUrlParam('assignmentId'));
-    }
+        function setOutput(output) {
+            $('#output').val(JSON.stringify(output));
+        }
 
-    return {
-      getInput: getInput,
-      setOutput: setOutput,
-      isPreview: isPreview,
-      setupSubmit: setupSubmit,
-    }
+        function isPreview() {
+            var assignment_id = getUrlParam('assignmentId');
+            if (assignment_id === null) return false;
+            return assignment_id == 'ASSIGNMENT_ID_NOT_AVAILABLE';
+        }
 
-  })();
+        function setupSubmit() {
+            var submit_to = getUrlParam('turkSubmitTo');
+            $('#results-form').attr('action', submit_to + '/mturk/externalSubmit');
+            $('#assignmentId').val(getUrlParam('assignmentId'));
+        }
+
+        return {
+            getInput: getInput,
+            setOutput: setOutput,
+            isPreview: isPreview,
+            setupSubmit: setupSubmit,
+        }
+
+    })();
 </script>
