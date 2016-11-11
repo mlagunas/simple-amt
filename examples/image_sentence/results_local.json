@@ -1,0 +1,21 @@
+{
+    "gui_kwd": "4",
+    "assignmentId": "0",
+    "train_acc": "1",
+    "easy_acc": "1",
+    "output": [{
+        "time_spent": 781,
+        "selection": "B",
+        "triplet_id": 0
+    }, {
+        "time_spent": 47823,
+        "selection": "B",
+        "triplet_id": 1
+    }, {
+        "time_spent": 1592,
+        "selection": "B",
+        "triplet_id": 2
+    }],
+    "gen": "M",
+    "gd_kwd": "3"
+}

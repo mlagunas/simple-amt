@@ -33,26 +33,23 @@ if __name__ == '__main__':
     for i, line in enumerate(args.input_json_file):
 
         hit_input = json.loads(line.strip())
-
-        # In a previous version I removed all single quotes from the json dump.
-        # TODO: double check to see if this is still necessary.
         template_params = {'input': json.dumps(
-            hit_input[1]), 'easy_q': json.dumps(hit_input[0])}
+            hit_input[1]), 'easy_q': json.dumps(hit_input[0]), 'answer_q': json.dumps(hit_input[2])}
         html = template.render(template_params)
         html_question = HTMLQuestion(html, frame_height)
         hit_properties['question'] = html_question
 
         boto_hit = None
-        # # This error handling is kinda hacky.
-        # # TODO: Do something better here.
-        # launched = False
-        # while not launched:
-        #     try:
-        #         print 'Trying to launch HIT %d' % (i + 1)
-        #         boto_hit = mtc.create_hit(**hit_properties)
-        #         launched = True
-        #     except MTurkRequestError as e:
-        #         print e
+        # This error handling is kinda hacky.
+        # TODO: Do something better here.
+        launched = False
+        while not launched:
+            try:
+                print 'Trying to launch HIT %d' % (i + 1)
+                boto_hit = mtc.create_hit(**hit_properties)
+                launched = True
+            except MTurkRequestError as e:
+                print e
         if boto_hit == None:
             hit_id = -1
         else:

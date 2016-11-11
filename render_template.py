@@ -4,6 +4,7 @@ import os.path
 import simpleamt
 import json
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(parents=[simpleamt.get_parent_parser()])
     parser.add_argument('--html_template', required=True)
@@ -20,14 +21,14 @@ if __name__ == '__main__':
     easy_qs = []
     inputs = []
     answer_qs = []
+    html = []
+    assignmentId = [-1]
     for i, line in enumerate(args.input_json_file):
         hit_input = json.loads(line.strip())
-        easy_qs.append(hit_input[0])
-        inputs.append(hit_input[1])
-        answer_qs.append(hit_input[2])
+        assignmentId[0] = i
+        html.append(template.render({'input': json.dumps(hit_input[1]), 'easy_q': json.dumps(
+            hit_input[0]), 'answer_q': json.dumps(hit_input[2]), 'assignmentId': json.dumps(assignmentId)}))
 
-    html = template.render({'input': json.dumps(
-        inputs), 'easy_q': json.dumps(easy_qs), 'answer_q': json.dumps(answer_qs)})
-
-    with open(os.path.join(output_dir, args.html_template), 'w') as f:
-        f.write(html)
+    for i in range(len(html)):
+        with open(os.path.join(output_dir, args.html_template.split(".")[0]) + "_" + str(i) + ".html", 'w') as f:
+            f.write(html[i])

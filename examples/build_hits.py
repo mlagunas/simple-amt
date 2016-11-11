@@ -52,8 +52,8 @@ data_val = dataset['val']
 
 # Configuration variables for creating the hit
 n_hits = 3
-n_task = 5
-n_randoms = 1 if n_task < 10 else n_task / 10
+n_task = 3
+n_randoms = 1 if n_task < 10 else (n_task / 10) + 1
 
 # get the easy triplets
 with open("image_sentence/easy_triplets.json") as data_file:
