@@ -25,21 +25,12 @@
                 ipt = JSON.parse($('#input').html());
                 idx = JSON.parse($('#easy_q').html());
                 adx = JSON.parse($('#answer_q').html());
-                aid = JSON.parse($('#ass_id').html());
-                return [ipt, idx, adx, aid]
+                // aid = JSON.parse($('#ass_id').html());
+                // return [ipt, idx, adx, aid]
+                return [ipt, idx, adx]
 
             } catch (e) {
                 alert(e); //error in the above string(in this case,yes)!
-                return default_input;
-            }
-        }
-
-        function getInputLab(default_input, num) {
-            if (typeof(default_input) === 'undefined') default_input = null;
-            try {
-                return JSON.parse($('#input').html());
-            } catch (e) {
-                console.log(e)
                 return default_input;
             }
         }
@@ -56,8 +47,8 @@
 
         function setupSubmit() {
             var submit_to = getUrlParam('turkSubmitTo');
-            // $('#results-form').attr('action', submit_to + '/mturk/externalSubmit');
-            if ($('#assignmentId').val() == '') $('#assignmentId').val(getUrlParam('assignmentId'));
+            $('#results-form').attr('action', submit_to + '/mturk/externalSubmit');
+            $('#assignmentId').val(getUrlParam('assignmentId'));
         }
 
         return {

@@ -23,11 +23,11 @@ if __name__ == '__main__':
     answer_qs = []
     html = []
     assignmentId = [-1]
+
     for i, line in enumerate(args.input_json_file):
         hit_input = json.loads(line.strip())
         assignmentId[0] = i
-        html.append(template.render({'input': json.dumps(hit_input[1]), 'easy_q': json.dumps(
-            hit_input[0]), 'answer_q': json.dumps(hit_input[2]), 'assignmentId': json.dumps(assignmentId)}))
+        html.append(template.render({'input': json.dumps(hit_input[1]), 'easy_q': json.dumps(hit_input[0]), 'answer_q': json.dumps(hit_input[2]), 'assignmentId': json.dumps(assignmentId)}))
 
     for i in range(len(html)):
         with open(os.path.join(output_dir, args.html_template.split(".")[0]) + "_" + str(i) + ".html", 'w') as f:

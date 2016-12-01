@@ -8,12 +8,12 @@ from boto.mturk.connection import MTurkRequestError
 import simpleamt
 
 if __name__ == '__main__':
-    local_data = 'examples/image_sentence/inputs_local.json'
 
     parser = argparse.ArgumentParser(parents=[simpleamt.get_parent_parser()])
     parser.add_argument('--hit_properties_file', type=argparse.FileType('r'))
     parser.add_argument('--html_template')
     parser.add_argument('--input_json_file', type=argparse.FileType('r'))
+    parser.add_argument('--input_local_json')
     args = parser.parse_args()
 
     mtc = simpleamt.get_mturk_connection_from_args(args)
@@ -26,15 +26,15 @@ if __name__ == '__main__':
     env = simpleamt.get_jinja_env(args.config)
     template = env.get_template(args.html_template)
 
-    with open(local_data) as data_file:
+    with open(args.input_local_json) as data_file:
         data = json.load(data_file)
     hit_ids = []
 
     for i, line in enumerate(args.input_json_file):
 
         hit_input = json.loads(line.strip())
-        template_params = {'input': json.dumps(
-            hit_input[1]), 'easy_q': json.dumps(hit_input[0]), 'answer_q': json.dumps(hit_input[2])}
+        template_params = {'input': json.dumps(hit_input[1]), 'easy_q': json.dumps(
+            hit_input[0]), 'answer_q': json.dumps(hit_input[2])}
         html = template.render(template_params)
         html_question = HTMLQuestion(html, frame_height)
         hit_properties['question'] = html_question
@@ -54,12 +54,13 @@ if __name__ == '__main__':
             hit_id = -1
         else:
             hit_id = boto_hit[0].HITId
-       # print data[0][i]
+        # print data[0][i]
         data[i]["hit_id"] = hit_id
+        # print (data[i])
         hit_ids.append(hit_id)
 
     # update local data
-    with open(local_data, 'w') as outfile:
+    with open(args.input_local_json, 'w') as outfile:
         json.dump(data, outfile)
 
     # TODO: Should the hit ids file be mandatory?

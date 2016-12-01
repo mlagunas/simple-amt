@@ -11,8 +11,8 @@ web.config.debug = False
 urls = ("/",  "Icons",
         "/end", "End")
 web.app = web.application(urls, globals())
-web.idx = 0
-web._HITS = 3
+web.idx = 22
+web._HITS = 50
 # if web.config.get('_session') is None:
 #     store = web.session.DiskStore('sessions')
 #     session = web.session.Session(web.app, store, initializer={'count': 0, '_HITS':3})
@@ -49,7 +49,7 @@ class Icons:
         data['easy_acc'] = data.easy_acc
 
         with open("examples/image_sentence/results_local.json", "a") as myfile:
-            myfile.write(json.dumps(data))
+            myfile.write(json.dumps(data)) + ",\n"
 
         raise web.seeother('/end')
 
@@ -57,7 +57,7 @@ class Icons:
 class End:
 
     def GET(self):
-        return "The test has finished Thanks for your time. We hope you enjoyed it!"
+        return "The test has finished Thanks for your time. We hope you enjoyed it!."
 
 if __name__ == "__main__":
     web.app.run()

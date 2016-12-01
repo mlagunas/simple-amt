@@ -3,7 +3,7 @@ import os.path
 import torchfile
 import json
 import numpy.random as nprnd
-
+import sys
 from random import randint
 
 # It builds a url from a given local path
@@ -22,19 +22,18 @@ def get_url(rel_path):
 
 def load_data(ds):
     # Some vars of the data set
-    ds = data_train
     ds_index = ds['index']
     ds_paths = ds['path']
 
     # Get three classes randomly
-    c_1 = randint(0, len(ds_index))
-    c_2 = randint(0, len(ds_index))
-    c_3 = randint(0, len(ds_index))
+    c_1 = randint(0, len(ds_index)-1)
+    c_2 = randint(0, len(ds_index)-1)
+    c_3 = randint(0, len(ds_index)-1)
 
     # Get the index of three images from the classes (c_1, c_2, c_3) randomly
-    ref_idx = randint(int(ds_index[c_1][0]), int(ds_index[c_1][1]))
-    A_idx = randint(int(ds_index[c_2][0]), int(ds_index[c_2][1]))
-    B_idx = randint(int(ds_index[c_3][0]), int(ds_index[c_3][1]))
+    ref_idx = randint(int(ds_index[c_1][0]-1), int(ds_index[c_1][1])-1)
+    A_idx = randint(int(ds_index[c_2][0]-1), int(ds_index[c_2][1])-1)
+    B_idx = randint(int(ds_index[c_3][0]-1), int(ds_index[c_3][1])-1)
 
     # Get the paths of the images
     ref_i = ds_paths[ref_idx]
@@ -46,18 +45,19 @@ def load_data(ds):
 # Get the data of the images, indexes, labels...
 offset = "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/"
 dataset = torchfile.load("/home/mlagunas/TFM/DML_icons/data/full-dataset.t7")
-data_train = dataset['train']
+# data_train = dataset['train']
 data_test = dataset['test']
-data_val = dataset['val']
+# data_val = dataset['val']
 
 # Configuration variables for creating the hit
-n_hits = 3
-n_task = 3
+n_hits = 50
+n_task = 60
 n_randoms = 1 if n_task < 10 else (n_task / 10) + 1
 
 # get the easy triplets
 with open("image_sentence/easy_triplets.json") as data_file:
     easy_triplets = json.load(data_file)
+
 
 # global vars to store json objets
 output = ""
@@ -105,7 +105,7 @@ for j in range(n_hits):
             answer.append(ans)
             rnd_idx += 1
         else:
-            ref_i, A_i, B_i = load_data(data_train)
+            ref_i, A_i, B_i = load_data(data_test)
         aux["triplets"].append([ref_i, A_i, B_i])
         # Building the output
         if i == n_task - 1:
@@ -126,9 +126,9 @@ for j in range(n_hits):
     output += "]]\n"
 
 # write file with the output generated
-f = open('image_sentence/inputs.json', 'w')
+f = open('image_sentence/inputs_.json', 'w')
 f.write(output)  # python will convert \n to os.linesep
 f.close()  # you can omit in most cases as the destructor will call it
 
-with open('image_sentence/inputs_local.json', 'w') as outfile:
+with open('image_sentence/inputs_local_.json', 'w') as outfile:
     json.dump(output_local, outfile)

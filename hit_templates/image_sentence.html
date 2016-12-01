@@ -59,44 +59,18 @@
             <div class="instructions" style="overflow: hidden;margin-bottom:25px ">
                 <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
 
-                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to imagine that <b>you are designing a graphical user interface where you need to place a group of icons</b>. You already have placed the reference icon and you need
-                to place another one whose <b>style is visually similar</b> to the style of the reference. Your task now is to select the image which <u>matches the best with the reference</u>. In some cases, neither A nor B will seem visually similar
-                to the Reference, in this scenario try to make the best choice you can.
+                <h3>How to do the task</h3> In order to accomplish the following task successfully, you will have to imagine that <b>you are designing a graphical user interface where you need to place a group of icons</b>. You already have placed the Reference icon and you need
+                to place another one whose <b>style is visually similar</b> to the style of the Reference. Your task now is to select the image which <u>matches best with the Reference</u>. In some cases, neither A nor B will seem visually similar to
+                the Reference, in this scenario try to make the best choice you can.
                 <div id='examples'>
-                    <h3>Selection example</h3> Before you begin the survey we will show you two basic examples of an icon selection task with the answers explained.
+                    <h3>Selection example</h3> Before you begin the survey, we will show you two basic examples of an icon selection task with the answers explained.
                     <br>
                     <br>
-                    <p>- In <b>Example 1</b> the correct option will be A. The icon A has no contour lines, and it is a solid icon coloured with black color, exactly as the reference. The icon B is not a solid icon and it has a medium-thick contour line,
-                        not matching in style with the reference. The icon B and the Reference have the same arrow shape, but <u>this survey is focusing on style consequently it will not affect the decision</u>.</p>
+                    <p>- In <b>Example 1</b>, the correct option will be A. Icon A has no contour lines, and it is a solid icon coloured with black colour, exactly as the Reference. The icon B is not a solid icon and it has a medium-thick contour line, not
+                        matching in style with the Reference. Icon B and the Reference have the same arrow shape, but <u>this survey is focusing on style, consequently the shape should not affect the decision</u>.</p>
 
                     <p>- In <b>Example 2</b>, the correct option will be A. The icon A has a thin contour line and it is not a solid icon, sharing these style properties with the Reference. The icon B is not solid but its contour lines are really thick which
-                        is the opposite as the Reference's contour lines.</p>
-
-                    <h3> Some data </h3> We would like to gather some
-                    <p> Gender
-                        <select id="gender" name="sometext" size="2">
-                        <option value ='M'>Male</option>
-                        <option value ='F'>Female</option> </select></p> <br>
-                    <p>Knowledge in Graphical User Interfaces:
-                        <select id='GUI' name="sometext" size="4">
-                        <option value ='1'>No idea</option>
-                        <option value ='2'>Low</option>
-                        <option value ='3'>Medium</option>
-                        <option value ='4'>High</option>
-                      </select> </p> <br>
-                    <p> Knowledge in Graphical Design:
-                        <select id='GD' name="sometext" size="4">
-                          <option value ='1'>No idea</option>
-                          <option value ='2'>Low</option>
-                          <option value ='3'>Medium</option>
-                          <option value ='4'>High</option>
-                      </select></p><br>
-
-
-                    <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br><br> Remember that the figures we have shown below are just simple examples and the cases that will be displayed during the test may vary.
-                    <br> Gender:
-                    <!-- In case you have any comments or questions, please write an email to <a href="mailto:504185@unizar.es">504185@unizar.es</a> -->
-                    <br><br> Press <i>START</i> to begin the survey.
+                        is the opposite to the Reference's contour lines.</p>
 
                     <div id="initialExamples" class="row text-center" style="margin-top:30px;">
                         <div class='col-xs-12 text-center'>
@@ -109,6 +83,36 @@
                             </div>
                         </div>
                     </div>
+                    <div id='data-div'>
+                        <h3> Some data about you</h3>
+                        <p> Gender
+                            <select id="gender" name="sometext" size="1">
+                        <option value = ''>Select gender</option>
+                        <option value ='M'>Male</option>
+                        <option value ='F'>Female</option> </select></p> <br>
+                        <p>Knowledge in Graphical User Interfaces:
+                            <select id='GUI' name="sometext" size="1">
+                        <option value = ''>Select GUI knowledge</option>
+                        <option value ='1'>No idea</option>
+                        <option value ='2'>Low</option>
+                        <option value ='3'>Medium</option>
+                        <option value ='4'>High</option>
+                      </select> </p> <br>
+                        <p> Knowledge in Graphical Design:
+                            <select id='GD' name="sometext" size="1">
+                          <option value = ''>Select GD knowledge</option>
+                          <option value ='1'>No idea</option>
+                          <option value ='2'>Low</option>
+                          <option value ='3'>Medium</option>
+                          <option value ='4'>High</option>
+                      </select></p><br>
+                    </div>
+
+                    <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br><br> Remember that the figures we have shown below are just simple examples and the different cases that you will see displayed during the test may
+                    vary and be more complicated.
+                    <br>
+                    <!-- In case you have any comments or questions, please write an email to <a href="mailto:504185@unizar.es">504185@unizar.es</a> -->
+                    <br><br> Press <i>START</i> to begin the survey.
                 </div>
                 <div class='row text-center' style="margin-top:60px;" id='train-btn-div'>
                     <button type="button" class='btn btn-lg btn-primary' id="btn_examples" style="margin-top:100px; margin:auto;">START</button>
@@ -162,8 +166,8 @@
                         <span id='counter'>
             <span class='counter-top'></span> / <span class='counter-bottom'></span>
                         </span>
-                        <form id='results-form' method='post' class='text-center' style='display:none'>
-                            <!-- <form id='results-form' method='post' action='dummy' class='text-center'> -->
+                        <!-- <form id='results-form' method='post' class='text-center' style='display:none'> -->
+                        <form id='results-form' method='post' action='dummy' class='text-center' style='display:none'>
                             <input type='hidden' value='' name='assignmentId' id='assignmentId' />
                             <input type='hidden' value='' name='output' id='output' />
                             <input type='hidden' value='' name='train_acc' id='train_acc' />
@@ -186,7 +190,7 @@
                 <div id="img1-div" align="center" class='col-xs-12 text-center'>
                     <div id="start-train" class='col-xs-4' style="z-index:1;position: absolute;border-radius: 25px;border: 2px solid #000000;background-color: white; margin-left: auto;margin-right: auto;left: 0;right: 0;">
                         <h3> Let's start the training </h3> This is how the survey user interface will look like.<br><br> In case you didn't <b>read the instructions</b> yet, we encourage you to read them before doing the training part.<br><br> Press the <i>GO AHEAD</i> button to <b>start the training</b>.<br><br>
-                        <button id='start-train-btn' style="margin-bottom:10px;margin: 0 auto;" class='btn btn-lg btn-primary'>Go ahead</button>
+                        <button id='start-train-btn' style="margin-bottom:10px;margin: 0 auto;margin-bottom:10px;" class='btn btn-lg btn-primary'>Go ahead</button>
                     </div>
                     <div id='text-train-container1'>
                     </div>
@@ -295,7 +299,7 @@
                 input = values[0]
                 easy_q = values[1]
                 answer_q = values[2]
-                assignmentId = values[3]
+                    // assignmentId = values[3]
                 console.log(assignmentId)
                 if (assignmentId != '') {
                     $('#assignmentId').val(assignmentId);
@@ -415,15 +419,15 @@
                     $('#btn_examples').click(function() {
                         var error = false;
                         $('#error-text').empty()
-                        if ($('#gender').val() == null) {
+                        if ($('#gender').val() == null || $('#gender').val() == '') {
                             $('#error-text').append("<p style=color:red;>Please select a gender</p>")
                             error = true;
                         }
-                        if ($('#GUI').val() == null) {
+                        if ($('#GUI').val() == null || $('#GUI').val() == '') {
                             $('#error-text').append("<p style=color:red;>Please tell us your knowledge of Graphical User Interfaces</p>")
                             error = true;
                         }
-                        if ($('#GD').val() == null) {
+                        if ($('#GD').val() == null || $('#GD').val() == '') {
                             $('#error-text').append("<p style=color:red;>Please tell us your knowledge of Graphical Design</p>")
                             error = true;
                         }
@@ -432,8 +436,9 @@
                             $('#gui_kwd').val($('#GUI').val())
                             $('#gd_kwd').val($('#GD').val())
                             $('#training').css("display", "block");
+                            $('#data-div').css("display", "none");
                             $('#train-btn-div').css("display", "none");
-                            $('#examples').css("display", "none");
+                            // $('#examples').css("display", "none");
                             $('#btn_examples').prop('disabled', true);
                             window.scrollTo(0, document.body.scrollHeight);
                         }
@@ -463,8 +468,6 @@
                         }
 
                     }
-
-
 
                     $('#rb2').on('change', function() {
                         next = true;
@@ -704,8 +707,8 @@
                             'time_spent': x[2],
                         };
                     });
-                    $('#suggestion-div').css("display", "block");
-                    $('#suggestion-text').append("<p> <h3>You are done!</h3> Thanks for taking part in the survey. We hope you enjoyed it, do not forget to email us any comments or suggestions.</p><br>");
+                    // $('#suggestion-div').css("display", "block");
+                    // $('#suggestion-text').append("<p> <h3>You are done!</h3> Thanks for taking part in the survey. We hope you enjoyed it, do not forget to email us any comments or suggestions.</p><br>");
                     $('#triplet_show').css("opacity", "0.3");
                     $('#triplet_show').css("pointer-events", "none");
                     // alert("Sending the data")
