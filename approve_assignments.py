@@ -35,10 +35,9 @@ if __name__ == '__main__':
     print 'Approving assignments'
     for idx, assignment_id in enumerate(approve_ids):
       print 'Approving assignment %d / %d' % (idx + 1, len(approve_ids))
-      mtc.approve_assignment(assignment_id)
+    #   mtc.approve_assignment(assignment_id)
     for idx, assignment_id in enumerate(reject_ids):
       print 'Rejecting assignment %d / %d' % (idx + 1, len(reject_ids))
-      mtc.reject_assignment(assignment_id, feedback='Invalid results')
+    #   mtc.reject_assignment(assignment_id, feedback='Invalid results')
   else:
     print 'Aborting'
-          

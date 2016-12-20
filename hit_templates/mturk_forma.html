@@ -1,0 +1,741 @@
+<html>
+
+<head>
+    <title>Select the most similar icon</title>
+    <!-- simpleamt depends on these libraries -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js'></script>
+    <!-- <link rel="import" href="../hit_templates/res.html"> -->
+    <!-- end of required libraries -->
+    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #text-area {
+            margin: 10px 0;
+            font-size: 24pt;
+        }
+
+        .image:hover {
+            opacity: .5;
+        }
+
+        div.instructions {
+            padding: 15px;
+            margin: auto;
+            background-color: #eee;
+            width: 800px;
+            align-content: center;
+        }
+
+        #button-div {
+            margin-bottom: 10px;
+        }
+
+        #button-div-train {
+            margin-bottom: 10px;
+        }
+
+        #counter {
+            margin: 0 10px;
+            font-size: 20pt;
+            font-weight: bold;
+        }
+
+        #counter-train {
+            margin: 0 10px;
+            font-size: 20pt;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='container text-center'>
+        <h1>Icon selection</h1>
+    </div>
+    <div class='container-fluid'>
+        <div class="col-md-12">
+            <div class="instructions" style="overflow: hidden;margin-bottom:25px ">
+                <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
+
+                <h3>How to do the task</h3> In order to accomplish the following task successfully you will have to select the icon A or B regarding which <b>shape matches the best to the Reference's shape</b>. In some cases, neither A nor B will seem visually similar to the Reference,
+                in this scenario try to make the best choice you can and always keep in mind that <b>we are looking for shape similarity</b>.
+                <div id='examples'>
+                    <h3>Selection example</h3> Before you begin the survey, we will show you two basic examples of an icon selection task with the answers explained. Remember, <b>we are focusing on the icons' shape only</b>, due to that, the style or other properties of the image
+                    should not influence your decision.
+                    <br>
+                    <br>
+                    <p>- In <b>Example 1</b>, the correct option will be A. Icon A has no contour lines, and it is a solid icon coloured with black colour, exactly as the Reference. The icon B is not a solid icon and it has a medium-thick contour line, not
+                        matching in style with the Reference. Icon B and the Reference have the same arrow shape, but <u>this survey is focusing on style, consequently the shape should not affect the decision</u>.</p>
+
+                    <p>- In <b>Example 2</b>, the correct option will be A. The icon A has a thin contour line and it is not a solid icon, sharing these style properties with the Reference. The icon B is not solid but its contour lines are really thick which
+                        is the opposite to the Reference's contour lines.</p>
+
+                    <div id="initialExamples" class="row text-center" style="margin-top:30px;">
+                        <div class='col-xs-12 text-center'>
+                            <div class='col-xs-push-1 col-xs-3 text-center'>
+                                <img id="example1" style="width:300px;  background-color:white;" src="https://raw.githubusercontent.com/mlagunas/simple-amt/master/EXAMPLES/ex1.png">
+                            </div>
+                            <div class='col-xs-push-3 col-xs-3 text-center'>
+
+                                <img id="example2" style="width:300px;  background-color:white;" src="https://raw.githubusercontent.com/mlagunas/simple-amt/master/EXAMPLES/ex2.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div id='data-div'>
+                        <h3> Some data about you</h3>
+                        <p> Gender
+                            <select id="gender" name="sometext" size="1">
+                        <option value = ''>Select gender</option>
+                        <option value ='M'>Male</option>
+                        <option value ='F'>Female</option> </select></p> <br>
+                        <p>Knowledge in Graphical User Interfaces:
+                            <select id='GUI' name="sometext" size="1">
+                        <option value = ''>Select GUI knowledge</option>
+                        <option value ='1'>No idea</option>
+                        <option value ='2'>Low</option>
+                        <option value ='3'>Medium</option>
+                        <option value ='4'>High</option>
+                      </select> </p> <br>
+                        <p> Knowledge in Graphical Design:
+                            <select id='GD' name="sometext" size="1">
+                          <option value = ''>Select GD knowledge</option>
+                          <option value ='1'>No idea</option>
+                          <option value ='2'>Low</option>
+                          <option value ='3'>Medium</option>
+                          <option value ='4'>High</option>
+                      </select></p><br>
+                    </div>
+
+                    <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br><br> Remember that the figures we have shown below are just simple examples and the different cases that you will see displayed during the test may
+                    vary and be more complicated.
+                    <br>
+                    <!-- In case you have any comments or questions, please write an email to <a href="mailto:504185@unizar.es">504185@unizar.es</a> -->
+                    <br><br> Press <i>START</i> to begin the survey.
+                </div>
+                <div class='row text-center' style="margin-top:60px;" id='train-btn-div'>
+                    <button type="button" class='btn btn-lg btn-primary' id="btn_examples" style="margin-top:100px; margin:auto;">START</button>
+                </div>
+                <div id="error-text">
+                </div>
+            </div>
+        </div>
+        <div id="triplet_show" class='container-fluid' style="display:none;">
+            <div class='row' style="margin-top : 25px; margin-bottom:25px; ">
+                <div class='col-xs-12 text-center'>
+                    <div id='text-container1'>
+                    </div>
+                    <div id='image-container1'>
+                    </div>
+                </div>
+            </div>
+            <form id="selectionForm">
+                <div class='row' style="margin-bottom : 50px; margin-top : 30px">
+                    <div class='col-xs-12 text-center'>
+                        <div class='col-xs-push-4 col-xs-2 text-center'>
+                            <div id='text-container2'>
+                            </div>
+                            <div id='image-container2' class='image'>
+                            </div>
+                            <div id='radio-container2'>
+                            </div>
+                        </div>
+                        <div class='col-xs-push-4 col-xs-2 text-center'>
+                            <div id='text-container3'>
+                            </div>
+                            <div id='image-container3' class='image'>
+                            </div>
+                            <div id='radio-container3'>
+                            </div>
+                        </div>
+                        <div class='col-xs-push-4 col-xs-4 text-center'>
+                            <div id="suggestion-div" style="border-radius: 25px;border: 2px solid #DE0000;display:none;">
+                                <div id="suggestion-text">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class='row'>
+                <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div'>
+                    <div>
+                        <button id='prev-btn' class='btn btn-lg btn-primary' disabled>Back</button>
+                        <span id='counter'>
+            <span class='counter-top'></span> / <span class='counter-bottom'></span>
+                        </span>
+                        <form id='results-form' method='post' class='text-center' style='display:none'>
+                            <!-- <form id='results-form' method='post' action='dummy' class='text-center' style='display:none'> -->
+                            <input type='hidden' value='' name='assignmentId' id='assignmentId' />
+                            <input type='hidden' value='' name='output' id='output' />
+                            <input type='hidden' value='' name='train_acc' id='train_acc' />
+                            <input type='hidden' value='' name='easy_acc' id='easy_acc' />
+                            <input type='hidden' value='' name='gen' id='gen' />
+                            <input type='hidden' value='' name='gui_kwd' id='gui_kwd' />
+                            <input type='hidden' value='' name='gd_kwd' id='gd_kwd' />
+                            <input type='submit' class='btn btn-lg btn-success' id='submit-btn' value='Submit' disabled />
+                        </form>
+                        <button id='next-btn' class='btn btn-lg btn-primary' disabled>Next</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="training" class='container-fluid' style="display:none;">
+            <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
+                <div id="img1-div" align="center" class='col-xs-12 text-center'>
+                    <div id="start-train" class='col-xs-4' style="z-index:1;position: absolute;border-radius: 25px;border: 2px solid #000000;background-color: white; margin-left: auto;margin-right: auto;left: 0;right: 0;">
+                        <h3> Let's start the training </h3> This is how the survey user interface will look like.<br><br> In case you didn't <b>read the instructions</b> yet, we encourage you to read them before doing the training part.<br><br> Press the <i>GO AHEAD</i> button to <b>start the training</b>.<br><br>
+                        <button id='start-train-btn' style="margin-bottom:10px;margin: 0 auto;margin-bottom:10px;" class='btn btn-lg btn-primary'>Go ahead</button>
+                    </div>
+                    <div id='text-train-container1'>
+                    </div>
+                    <div id='image-train-container1'>
+                    </div>
+                </div>
+            </div>
+            <div class='row' style="margin-bottom : 50px; margin-top : 30px">
+                <div class='col-xs-12 text-center'>
+                    <div id="img2-div" class='col-xs-push-4 col-xs-2 text-center' style='opacity:0.3;pointer-events:none;'>
+                        <div id='text-train-container2'>
+                        </div>
+                        <div id='image-train-container2' class='image'>
+                        </div>
+                        <div id='radio-train-container2'>
+                        </div>
+                    </div>
+                    <div id="img3-div" class='col-xs-push-4 col-xs-2 text-center' style='opacity:0.3;pointer-events:none;'>
+                        <div id='text-train-container3'>
+                        </div>
+                        <div id='image-train-container3' class='image'>
+                        </div>
+                        <div id='radio-train-container3'>
+                        </div>
+                    </div>
+                    <div class='col-xs-push-4 col-xs-4 text-center'>
+                        <div id="suggestion-train-div" style="border-radius: 25px;border: 2px solid #DE0000;display:none;">
+                            <div id="suggestion-train-text">
+                            </div>
+                            <button id='continue-train-btn' style="margin-bottom:10px;margin: 0 auto;" class='btn btn-lg btn-primary'>I got it</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='row' id="btn-train">
+                <div class='col-xs-4 col-xs-offset-4 text-center' id='button-div-train' style='opacity:0.3;pointer-events:none;'>
+                    <button id='prev-train-btn' class='btn btn-lg btn-primary' disabled>Back</button>
+                    <span id='counter-train'>
+            <span class='counter-train-top'></span> / <span class='counter-train-bot'></span>
+                    </span>
+                    <button id='next-train-btn' class='btn btn-lg btn-primary' disabled>Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "simpleamt.html" %}
+    <script>
+        $(function() {
+
+            function shuffle(array) {
+                var m = array.length,
+                    t, i;
+                while (m) {
+                    i = Math.floor(Math.random() * m--);
+                    t = array[m];
+                    array[m] = array[i];
+                    array[i] = t;
+                }
+                return array;
+            }
+
+            var t0 = 0;
+            var t1 = 0;
+            var acc = -1;
+            // Parallel to input
+            var answers = [];
+            var TRAIN_CORRECT = ["B", "A", "B", "A"];
+            var train_answer = ["", "", "", ""]
+            var train_error = [false, false, false, false]
+            var train_suggest = [
+                "<div style='padding:5px;'><h3>Are you sure this is the right answer?</h3><p> Look carefully at the icon you have chosen and compare it with the Reference, don't forget that we are comparing the icons' <b>shape</b>.</p> </div>",
+                "", "", ""
+            ]
+            var correct_train = 0;
+            var time = [];
+            // Define some default input.
+            var ID_INPUT = [];
+            var rndTrain = Math.floor(Math.random() * 5);
+            var arr_shuffle = [0, 1, 2, 3]
+            arr_shuffle = shuffle(arr_shuffle)
+            console.log("arrshufle" + arr_shuffle)
+            var TRAIN_INPUT = [
+                [
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/bank_8974/77106.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/bank_8974/77111.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/bank_8974/77116.png"
+                ],
+                [
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/characters_885/59448.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/characters_885/59449.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/characters_885/59460.png"
+                ],
+                [
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/car-repair_15063/319319.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/car-repair_15063/319970.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/car-repair_15063/319335.png"
+
+                ],
+                [
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/buildings-and-landmarks_438738/67971.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/buildings-and-landmarks_438738/68012.png",
+                    "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/buildings-and-landmarks_438738/68011.png"
+                ]
+            ];
+
+            var DEFAULT_INPUT = [
+
+            ]
+
+            var input = null;
+
+            // Some variables to track state of the HIT.
+            var idx = 0;
+            var idxt = 0
+            var enabled = false;
+
+            function main() {
+                // If this is a HIT on AMT, then replace the default input with the real input.
+
+                values = simpleamt.getInput(DEFAULT_INPUT);
+
+                input = values[0]
+                easy_q = values[1]
+                answer_q = values[2]
+                    // assignmentId = values[3]
+                console.log(assignmentId)
+                if (assignmentId != '') {
+                    $('#assignmentId').val(assignmentId);
+                }
+
+                // rnd_idx = Math.floor((Math.random() * input.length));
+                // console.log(rnd_idx)
+                // input = input[rnd_idx]
+                // easy_q = easy_q[rnd_idx]
+                // answer_q = answer_q[rnd_idx]
+                console.log(input)
+                console.log(answer_q)
+                console.log(easy_q)
+                console.log("input retrieved");
+
+                // Enable the UI if the HIT is not in preview mode.
+                if (!simpleamt.isPreview()) {
+                    enable_hit();
+                }
+                console.log("hit enabled")
+
+                var index = 0;
+                // Set up the descriptions.
+                _.each(input, function() {
+                    answers.push("");
+                    time.push(0);
+                    ID_INPUT.push(index);
+                    index += 1;
+                });
+
+
+                // Preload all images
+                var imgs = [];
+                _.each(input, function(img_url) {
+                    var img = new Image();
+                    img.onload = function() {};
+                    img.src = img_url;
+                });
+                render();
+            }
+
+
+            function include(arr, obj) {
+                return (arr.indexOf(obj) != -1);
+            }
+
+            // Use the current index to update the image and description
+            function render() {
+                // Set up the images
+                // TRAINING PART
+                $('#results-labo').append('<h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3><h3> Reference </h3>');
+                $('#image-train-container1').empty();
+                $('#text-train-container1').empty();
+                $('#text-train-container1').append('<h3> Reference </h3>')
+                $('<img>').attr('src', TRAIN_INPUT[arr_shuffle[idxt]][0]).attr('style', 'height: 100px; ').appendTo($('#image-train-container1'));
+
+                $('#image-train-container2').empty();
+                $('#radio-train-container2').empty();
+                $('#text-train-container2').empty();
+                $('#text-train-container2').append('<h3> A </h3>')
+                $('<img>').attr('src', TRAIN_INPUT[arr_shuffle[idxt]][1]).attr('style', 'height: 100px; ').appendTo($('#image-train-container2'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rbt2').attr('value', 'A').appendTo($('#radio-train-container2'));
+
+                $('#image-train-container3').empty();
+                $('#radio-train-container3').empty();
+                $('#text-train-container3').empty();
+                $('#text-train-container3').append('<h3> B </h3>')
+                $('<img>').attr('src', TRAIN_INPUT[arr_shuffle[idxt]][2]).attr('style', 'height: 100px; ').appendTo($('#image-train-container3'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rbt3').attr('value', 'B').appendTo($('#radio-train-container3'));
+
+                //TEST PART
+                $('#image-container1').empty();
+                $('#text-container1').empty();
+                $('#text-container1').append('<h3> Reference </h3>');
+                $('<img>').attr('src', input[idx][0]).attr('style', 'height: 100px; ').appendTo($('#image-container1'));
+
+                $('#image-container2').empty();
+                $('#radio-container2').empty();
+                $('#text-container2').empty();
+                $('#text-container2').append('<h3> A </h3>');
+                $('<img>').attr('src', input[idx][1]).attr('style', 'height: 100px; ').appendTo($('#image-container2'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb2').attr('value', 'A').appendTo($('#radio-container2'));
+
+                $('#image-container3').empty();
+                $('#radio-container3').empty();
+                $('#text-container3').empty();
+                $('#text-container3').append('<h3> B </h3>');
+                $('<img>').attr('src', input[idx][2]).attr('style', 'height: 100px; ').appendTo($('#image-container3'));
+                $('<input>').attr('type', 'radio').attr('name', 'radioName').attr('id', 'rb3').attr('value', 'B').appendTo($('#radio-container3'));
+
+                // Set up the text area
+                // $('#text-area').val(descriptions[idx]);
+
+                // Refresh the counter
+                $('.counter-top').text(idx + 1);
+                $('.counter-bottom').text(input.length);
+                $('.counter-train-top').text(idxt + 1);
+                $('.counter-train-bot').text(TRAIN_INPUT.length);
+
+                // If the UI is enabled, enable or disable the buttons depending on
+                // the index.
+                if (enabled) {
+
+                    var prev_btn = $('#prev-btn');
+                    var next_btn = $('#next-btn');
+
+                    var prev_btn_train = $('#prev-train-btn');
+                    var next_btn_train = $('#next-train-btn');
+
+                    var next = false;
+
+                    prev_btn.prop('disabled', true);
+                    next_btn.prop('disabled', true);
+                    next_btn_train.prop('disabled', true);
+                    prev_btn_train.prop('disabled', true);
+
+                    $('#btn_examples').click(function() {
+                        var error = false;
+                        $('#error-text').empty()
+                        if ($('#gender').val() == null || $('#gender').val() == '') {
+                            $('#error-text').append("<p style=color:red;>Please select a gender</p>")
+                            error = true;
+                        }
+                        if ($('#GUI').val() == null || $('#GUI').val() == '') {
+                            $('#error-text').append("<p style=color:red;>Please tell us your knowledge of Graphical User Interfaces</p>")
+                            error = true;
+                        }
+                        if ($('#GD').val() == null || $('#GD').val() == '') {
+                            $('#error-text').append("<p style=color:red;>Please tell us your knowledge of Graphical Design</p>")
+                            error = true;
+                        }
+                        if (!error) {
+                            $('#gen').val($('#gender').val())
+                            $('#gui_kwd').val($('#GUI').val())
+                            $('#gd_kwd').val($('#GD').val())
+                            $('#training').css("display", "block");
+                            $('#data-div').css("display", "none");
+                            $('#train-btn-div').css("display", "none");
+                            // $('#examples').css("display", "none");
+                            $('#btn_examples').prop('disabled', true);
+                            window.scrollTo(0, document.body.scrollHeight);
+                        }
+                    });
+
+                    if (answers[idx] != "") {
+                        if (answers[idx] == "A") {
+                            $('#rb2').prop('checked', true);
+                        }
+                        if (answers[idx] == "B") {
+                            $('#rb3').prop('checked', true);
+                        }
+                        if (idx < input.length - 1) {
+                            next_btn.prop('disabled', false);
+                        }
+                    }
+
+                    if (train_answer[idxt] != "") {
+                        if (train_answer[idxt] == "A") {
+                            $('#rbt2').prop('checked', true);
+                        }
+                        if (train_answer[idxt] == "B") {
+                            $('#rbt3').prop('checked', true);
+                        }
+                        if (idxt < TRAIN_INPUT.length) {
+                            next_btn_train.prop('disabled', false);
+                        }
+
+                    }
+
+                    $('#rb2').on('change', function() {
+                        next = true;
+                        answers[idx] = "A";
+
+                        if (idx + 1 == input.length) {
+                            $('#submit-btn').prop('disabled', false);
+                        } else {
+                            next_btn.prop('disabled', false)
+                        }
+                    })
+
+                    $('#rb3').on('change', function() {
+                        next = true;
+                        answers[idx] = "B";
+
+                        if (idx + 1 == input.length) {
+                            $('#submit-btn').prop('disabled', false);
+                        } else {
+                            next_btn.prop('disabled', false);
+                        }
+                    })
+
+                    $('#rbt2').on('change', function() {
+                        $('#suggestion-train-div').css("display", "none");
+                        next = true;
+                        train_answer[idxt] = "A"
+                        if (idxt < TRAIN_INPUT.length) {
+                            next_btn_train.prop('disabled', false);
+                        }
+                    })
+
+                    $('#rbt3').on('change', function() {
+                        $('#suggestion-train-div').css("display", "none");
+                        next = true;
+                        train_answer[idxt] = "B";
+                        if (idxt < TRAIN_INPUT.length) {
+                            next_btn_train.prop('disabled', false);
+                        }
+                    })
+
+                    if (idx > 0) {
+                        prev_btn.prop('disabled', false);
+                    }
+
+                    if (idxt > 0) {
+                        prev_btn_train.prop('disabled', false);
+                    }
+                }
+            }
+
+            function get_accuracy_train() {
+                var acc = 0;
+                for (i = 0; i < train_answer.length; i++) {
+                    if (!train_error[i]) {
+                        acc++;
+                    }
+                }
+                return acc / train_answer.length;
+            }
+
+            function get_accuracy_easy() {
+                var acc = 0;
+                for (i = 0; i < answer_q.length; i++) {
+                    if (answers[easy_q[i]] == answer_q[i]) {
+                        acc++;
+                    }
+                }
+                return (acc / answer_q.length);
+            }
+
+            // Update the index, and save the text in the text area.
+            function set_idx(new_idx) {
+
+                if (new_idx < 0 || new_idx >= input.length) return;
+                // descriptions[idx] = $('#text-area').val();
+
+                idx = new_idx;
+                render();
+            }
+
+            // Update the index, and save the text in the text area.
+            function set_idxt(new_idx) {
+
+                if (new_idx < 0 || new_idx >= TRAIN_INPUT.length) return;
+                // descriptions[idx] = $('#text-area').val();
+
+                idxt = new_idx;
+                render();
+            }
+
+            // Enable the UI.
+            function enable_hit() {
+                enabled = true;
+
+                // Enable components
+                $('#next-btn').click(function() {
+                    t1 = new Date().getTime();
+                    time[idx] += t1 - t0;
+                    set_idx(idx + 1);
+                    if (idx + 1 == input.length) {
+                        $('#next-btn').css("display", "none")
+                        $('#results-form').css("display", "inline")
+                    }
+                    t0 = t1;
+                    console.log(time);
+                });
+
+                $('#prev-btn').click(function() {
+                    if (idx + 1 == input.length) {
+                        $('#next-btn').css("display", "inline")
+                        $('#results-form').css("display", "none")
+                    }
+                    t0 = new Date().getTime();
+                    set_idx(idx - 1);
+                });
+
+                $(document).ready(function() {
+                    $('#image-train-container2').click(function(e) {
+                        $('#rbt2').prop('checked', true);
+                        $('#rbt2').trigger("change");
+                    });
+                    $('#start-train-btn').click(function(e) {
+                        $('#start-train').css("display", "none");
+                        $('#img1-div').css("opacity", "1");
+                        $('#img2-div').css("opacity", "1");
+                        $('#img3-div').css("opacity", "1");
+                        $('#img1-div').css("pointer-events", "auto");
+                        $('#img2-div').css("pointer-events", "auto");
+                        $('#img3-div').css("pointer-events", "auto");
+                        $('#button-div-train').css("opacity", "1");
+                        $('#button-div-train').css("pointer-events", "auto");
+                    });
+
+                    $('#image-container2').click(function(e) {
+                        $('#rb2').prop('checked', true);
+                        $('#rb2').trigger("change");
+                    });
+                    $('#image-train-container3').click(function(e) {
+                        $('#rbt3').prop('checked', true);
+                        $('#rbt3').trigger("change");
+                    });
+                    $('#image-container3').click(function(e) {
+                        $('#rb3').prop('checked', true);
+                        $('#rb3').trigger("change");
+
+                    });
+                });
+
+
+                $('#continue-train-btn').click(function() {
+                    if (idxt + 1 == TRAIN_CORRECT.length && TRAIN_CORRECT[arr_shuffle[idxt]] == train_answer[idxt]) {
+                        acc = get_accuracy_train();
+                        $('#train_acc').val(acc);
+                        // alert("The test will start once this window is closed, get ready.\n");
+                        $('#training').css("display", "none");
+                        $('#triplet_show').css("display", "block");
+                        window.scrollTo(0, document.body.scrollHeight);
+                        t0 = new Date().getTime();
+                    } else {
+                        $('#suggestion-train-text').empty();
+                        $('#suggestion-train-div').css("display", "none");
+                        $('#img1-div').css("opacity", "1");
+                        $('#img2-div').css("opacity", "1");
+                        $('#img3-div').css("opacity", "1");
+                        $('#button-div-train').css("opacity", "1");
+                        $('#img1-div').css("pointer-events", "auto");
+                        $('#img2-div').css("pointer-events", "auto");
+                        $('#img3-div').css("pointer-events", "auto");
+                        $('#button-div-train').css("pointer-events", "auto");
+                    }
+                });
+
+                // Enable components
+                $('#next-train-btn').click(function() {
+                    if (TRAIN_CORRECT[arr_shuffle[idxt]] != train_answer[idxt]) {
+                        train_error[idxt] = true;
+                        $('#continue-train-btn').css("display", "block");
+                        $('#suggestion-train-text').empty();
+                        $('#suggestion-train-text').append(train_suggest[0]);
+                        $('#suggestion-train-div').css("border", "2px solid #DE0000");
+                        $('#suggestion-train-div').css("display", "block");
+                        $('#img1-div').css("opacity", "0.3");
+                        $('#img2-div').css("opacity", "0.3");
+                        $('#img3-div').css("opacity", "0.3");
+                        $('#button-div-train').css("opacity", "0.3");
+                        $('#img1-div').css("pointer-events", "none");
+                        $('#img2-div').css("pointer-events", "none");
+                        $('#img3-div').css("pointer-events", "none");
+                        $('#button-div-train').css("pointer-events", "none");
+                    } else {
+                        if (idxt + 1 == TRAIN_CORRECT.length) {
+                            $("#continue-train-btn").html('Continue');
+                            $('#continue-train-btn').css("display", "block");
+                            $('#suggestion-train-div').css("display", "block");
+                            $('#suggestion-train-div').css("border", "2px solid #00ff19");
+                            $('#suggestion-train-text').empty()
+
+                            $('#suggestion-train-text').append("<p> <h3>Great!</h3> You are done with the training part, the test will start after you press the <i>CONTINUE</i> button, get ready.</p><br>");
+                            $('#img1-div').css("opacity", "0.3");
+                            $('#img2-div').css("opacity", "0.3");
+                            $('#img3-div').css("opacity", "0.3");
+                            $('#button-div-train').css("opacity", "0.3");
+                            $('#img1-div').css("pointer-events", "none");
+                            $('#img2-div').css("pointer-events", "none");
+                            $('#img3-div').css("pointer-events", "none");
+                            $('#button-div-train').css("pointer-events", "none");
+                        } else {
+                            $('#continue-train-btn').css("display", "none");
+                            $('#suggestion-train-btn').css("display", "block");
+                            $('#suggestion-train-div').css("border", "2px solid #00ff19");
+                            $('#suggestion-train-text').empty()
+                            $('#suggestion-train-text').append("<p> <h3>Amazing job!</h3> You have chosen the right answer!</p><br>");
+                            $('#suggestion-train-div').css("display", "block");
+                        }
+                        set_idxt(idxt + 1);
+                    }
+                    console.log(train_error);
+                });
+
+                $('#prev-train-btn').click(function() {
+                    set_idxt(idxt - 1);
+                });
+
+
+
+                // Set up submit handler.
+                simpleamt.setupSubmit(acc);
+                $('#submit-btn').click(function() {
+                    $('#easy_acc').val(get_accuracy_easy());
+                    var t1 = new Date().getTime();
+                    time[idx] = t1 - t0;
+                    var output = _.map(_.zip(ID_INPUT, answers, time), function(x) {
+                        return {
+                            'triplet_id': x[0],
+                            'selection': x[1],
+                            'time_spent': x[2],
+                        };
+                    });
+                    // $('#suggestion-div').css("display", "block");
+                    // $('#suggestion-text').append("<p> <h3>You are done!</h3> Thanks for taking part in the survey. We hope you enjoyed it, do not forget to email us any comments or suggestions.</p><br>");
+                    $('#triplet_show').css("opacity", "0.3");
+                    $('#triplet_show').css("pointer-events", "none");
+                    // alert("Sending the data")
+                    simpleamt.setOutput(output);
+                });
+            }
+
+            main();
+        });
+    </script>
+</body>
+
+</html>

@@ -19,8 +19,11 @@ def process_assignments(mtc, hit_id):
                 continue
             results.append({
                 'assignment_id': a.AssignmentId,
-                'train_acc' : a.answers[0][1].fields[0],
-                'easy_acc' : a.answers[0][2].fields[0],
+                'train_acc': a.answers[0][1].fields[0],
+                'easy_acc': a.answers[0][2].fields[0],
+                'gen': a.answers[0][3].fields[0],
+                'gui_kwd': a.answers[0][4].fields[0],
+                'gd_kwd': a.answers[0][5].fields[0],
                 'hit_id': hit_id,
                 'worker_id': a.WorkerId,
                 'output': json.loads(a.answers[0][0].fields[0]),

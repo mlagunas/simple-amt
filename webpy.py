@@ -11,8 +11,8 @@ web.config.debug = False
 urls = ("/",  "Icons",
         "/end", "End")
 web.app = web.application(urls, globals())
-web.idx = 22
-web._HITS = 50
+web.idx = 0
+web._HITS = 10
 # if web.config.get('_session') is None:
 #     store = web.session.DiskStore('sessions')
 #     session = web.session.Session(web.app, store, initializer={'count': 0, '_HITS':3})
@@ -29,7 +29,7 @@ class Icons:
         # print idx
         print "idx " + str(web.idx)
         f = codecs.open(
-            "/home/mlagunas/TFM/simple-amt/rendered_templates/image_sentence_" + str(web.idx) + ".html", 'r')
+            "/home/mlagunas/TFM/simple-amt/rendered_templates/mturk_forma_" + str(web.idx) + ".html", 'r')
 
         if web.idx == web._HITS - 1:
             web.idx = 0
@@ -43,13 +43,18 @@ class Icons:
 
         # build JSON from post method
         data = web.input()
-        data['assignmentId'] = data.assignmentId
-        data['output'] = json.loads(data.output)
-        data['train_acc'] = data.train_acc
-        data['easy_acc'] = data.easy_acc
+        print data
+        json_output = {}
+        json_output['assignmentId'] = data.assignmentId
+        json_output['output'] = json.loads(data.output)
+        json_output['train_acc'] = data.train_acc
+        json_output['gen'] = data.gen
+        json_output['gd_kwd'] = data.gd_kwd
+        json_output['gui_kwd'] = data.gui_kwd
+        print json_output
 
-        with open("examples/image_sentence/results_local.json", "a") as myfile:
-            myfile.write(json.dumps(data)) + ",\n"
+        with open("examples/mturk_forma/results_local.json", "a") as myfile:
+            myfile.write(json.dumps(json_output) + "\n")
 
         raise web.seeother('/end')
 
@@ -57,7 +62,7 @@ class Icons:
 class End:
 
     def GET(self):
-        return "The test has finished Thanks for your time. We hope you enjoyed it!."
+        return "You have finished the test. :)"
 
 if __name__ == "__main__":
     web.app.run()
