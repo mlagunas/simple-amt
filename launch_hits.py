@@ -31,7 +31,6 @@ if __name__ == '__main__':
     hit_ids = []
 
     for i, line in enumerate(args.input_json_file):
-
         hit_input = json.loads(line.strip())
         template_params = {'input': json.dumps(hit_input[1]), 'easy_q': json.dumps(
             hit_input[0]), 'answer_q': json.dumps(hit_input[2])}
@@ -46,7 +45,9 @@ if __name__ == '__main__':
         while not launched:
             try:
                 print 'Trying to launch HIT %d' % (i + 1)
+                # print hit_properties['question']
                 boto_hit = mtc.create_hit(**hit_properties)
+
                 launched = True
             except MTurkRequestError as e:
                 print e

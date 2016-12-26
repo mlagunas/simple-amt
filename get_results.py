@@ -10,7 +10,6 @@ def process_assignments(mtc, hit_id):
     assignments = mtc.get_assignments(hit_id)
     for a in assignments:
         if a.AssignmentStatus in ['Approved', 'Submitted']:
-
             try:
                 output = json.loads(a.answers[0][0].fields[0])
             except ValueError as e:

@@ -59,17 +59,19 @@
             <div class="instructions" style="overflow: hidden;margin-bottom:25px ">
                 <h2>Icon Selection Survey</h2> First of all, thank you for spending your time participating in our user study. It should not take longer than <u>10 minutes</u> to complete. Please, read carefully the instructions before you proceed with the survey.
 
-                <h3>How to do the task</h3>
-                In order to accomplish the following task successfully, you will have to select one of the two options, Icon A or Icon B, depending on which <b>shape matches the Reference's Icon shape best</b>. In some cases, neither A nor B will seem similar in shape to the Reference; just try to make the best choice you can, and keep in mind that <b>we are looking for shape similarity only</b> (other aspects of style such as color, or style, should not be taken into account).
+                <h3>How to do the task</h3> In order to accomplish the following task successfully, you will have to select one of the two options, Icon A or Icon B, depending on which <b>shape matches the Reference's Icon shape best</b>. In some cases, neither A nor B will seem
+                similar in shape to the Reference; just try to make the best choice you can, and keep in mind that <b>we are looking for shape similarity only</b> (other aspects such as color, or style, should not be taken into account).
 
                 <div id='examples'>
-                    <h3>Selection example</h3>
-                    Before you begin, we will show you two basic examples, with some justifications next to the suggested answers. Remember, <b>we are focusing on the icons' shape only</b>; the style, or other any properties of the icons should not influence your decision.
+                    <h3>Selection example</h3> Before you begin, we will show you two basic examples, with some justifications next to the suggested answers. Remember, <b>we are focusing on the icons' shape only</b>; the style, or any other properties of the icons should not influence
+                    your decision.
                     <br>
                     <br>
-                    <p>- In <b>Example 1</b>, the obvious <u>option would be A</u>. Icon A has a <u>cloud shape</u>, exactly as the Reference, while the Icon B has a dog shape, making it completly different to the Reference's one. The differences between the Reference and Icon A are the rain drops and the lightning bolt, but overall it seems clear that A is still much closer in shape to the Reference than B.</p>
+                    <p>- In <b>Example 1</b>, the obvious <u>option would be A</u>. Icon A has a <u>cloud shape</u>, exactly like the Reference, while Icon B has a dog shape, making it completly different to the Reference's one. The differences between the
+                        Reference and Icon A are the rain drops and the lightning bolt, but overall it seems clear that A is still much closer in shape to the Reference than B.</p>
 
-                    <p>- In <b>Example 2</b>, the obvious <u>option will be B</u>. It is clearly visible that both Icon B and the Reference share a <u>similar arrow shape</u> (although oriented differently). Icon A is star-shaped, which does not match with the Reference despite sharing a really similar visual style (continuous black outline, empty fill). Once again, remember that this survey only focuses on the icons' shape.</p>
+                    <p>- In <b>Example 2</b>, the obvious <u>option will be B</u>. It is clearly visible that both Icon B and the Reference share a <u>similar arrow shape</u> (although oriented differently). Icon A is star-shaped, which does not match with
+                        the Reference despite sharing a really similar visual style (continuous black outline, empty fill). Once again, remember that this survey only focuses on the icons' shape.</p>
 
                     <div id="initialExamples" class="row text-center" style="margin-top:30px;">
                         <div class='col-xs-12 text-center'>
@@ -107,7 +109,7 @@
                       </select></p><br>
                     </div>
 
-                    <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br><br> Remember that the figures we have shown below are just simple examples and the different cases that you will see displayed during the test may
+                    <h3>That's all folks</h3> Please note that javascript should be enabled for the survey to work correctly.<br><br> Remember that the figures we have shown above are just simple examples and the different cases that you will see displayed during the test may
                     vary and be more complicated.
                     <br>
                     <!-- In case you have any comments or questions, please write an email to <a href="mailto:504185@unizar.es">504185@unizar.es</a> -->
@@ -165,8 +167,8 @@
                         <span id='counter'>
             <span class='counter-top'></span> / <span class='counter-bottom'></span>
                         </span>
-                        <form id='results-form' method='post' class='text-center' style='display:none'>
-                            <!-- <form id='results-form' method='post' action='dummy' class='text-center' style='display:none'> -->
+                        <!-- <form id='results-form' method='post' class='text-center' style='display:none'> -->
+                        <form id='results-form' method='post' action='dummy' class='text-center' style='display:none'>
                             <input type='hidden' value='' name='assignmentId' id='assignmentId' />
                             <input type='hidden' value='' name='output' id='output' />
                             <input type='hidden' value='' name='train_acc' id='train_acc' />
@@ -188,13 +190,21 @@
             <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
                 <div id="img1-div" align="center" class='col-xs-12 text-center'>
                     <div id="start-train" class='col-xs-4' style="z-index:1;position: absolute;border-radius: 25px;border: 2px solid #000000;background-color: white; margin-left: auto;margin-right: auto;left: 0;right: 0;">
-                        <h3> Let's start the training </h3> This is how the survey user interface will look like.<br><br> In case you didn't <b>read the instructions</b> yet, we encourage you to read them before doing the training part.<br><br> Press the <i>GO AHEAD</i> button to <b>start the training</b>.<br><br>
+                        <h3> Let's start the training </h3>
+                        <p>In case you didn't <b>read the instructions</b> yet, we encourage you to read them before doing the training part.<br><br> Press the <i>GO AHEAD</i> button to <b>start the training</b>.</p><br><br>
                         <button id='start-train-btn' style="margin-bottom:10px;margin: 0 auto;margin-bottom:10px;" class='btn btn-lg btn-primary'>Go ahead</button>
                     </div>
                     <div id='text-train-container1'>
                     </div>
                     <div id='image-train-container1'>
                     </div>
+                </div>
+            </div>
+            <div class='row' style="margin-top : 25px; margin-bottom:25px ;">
+                <div id="training-finished" class='col-xs-4' style="z-index:1; display:none; position: absolute;border-radius: 25px;border: 3px solid #00ff19;background-color: white; margin-left: auto;margin-right: auto;left: 0;right: 0;">
+                    <h3>GREAT!</h3>
+                    <p><br> You are done with the training part, the test will start after you press the <i>CONTINUE</i> button, get ready.</p><br><br>
+                    <button id="training-finished-btn" style="margin: 0 auto; margin-bottom: 10px;" class="btn btn-lg btn-primary">CONTINUE</button>
                 </div>
             </div>
             <div class='row' style="margin-bottom : 50px; margin-top : 30px">
@@ -271,7 +281,7 @@
             var rndTrain = Math.floor(Math.random() * 5);
             var arr_shuffle = [0, 1, 2, 3]
             arr_shuffle = shuffle(arr_shuffle)
-            console.log("arrshufle" + arr_shuffle)
+
             var TRAIN_INPUT = [
                 [
                     "https://raw.githubusercontent.com/mlagunas/simple-amt/master/full-icons/train/bank_8974/77106.png",
@@ -316,8 +326,8 @@
                 easy_q = values[1]
                 answer_q = values[2]
                     // assignmentId = values[3]
-                console.log(assignmentId)
                 if (assignmentId != '') {
+                    console.log("AssignmentID" + assignmentId)
                     $('#assignmentId').val(assignmentId);
                 }
 
@@ -326,10 +336,10 @@
                 // input = input[rnd_idx]
                 // easy_q = easy_q[rnd_idx]
                 // answer_q = answer_q[rnd_idx]
-                console.log(input)
-                console.log(answer_q)
-                console.log(easy_q)
-                console.log("input retrieved");
+                // console.log(input)
+                // console.log(answer_q)
+                // console.log(easy_q)
+                // console.log("input retrieved");
 
                 // Enable the UI if the HIT is not in preview mode.
                 if (!simpleamt.isPreview()) {
@@ -606,6 +616,7 @@
                         $('#rbt2').prop('checked', true);
                         $('#rbt2').trigger("change");
                     });
+
                     $('#start-train-btn').click(function(e) {
                         $('#start-train').css("display", "none");
                         $('#img1-div').css("opacity", "1");
@@ -633,12 +644,19 @@
                     });
                 });
 
+                $('#training-finished-btn').click(function() {
+                    acc = get_accuracy_train();
+                    $('#train_acc').val(acc);
+                    $('#training').css("display", "none");
+                    $('#triplet_show').css("display", "block");
+                    window.scrollTo(0, document.body.scrollHeight);
+                    t0 = new Date().getTime();
+                });
 
                 $('#continue-train-btn').click(function() {
                     if (idxt + 1 == TRAIN_CORRECT.length && TRAIN_CORRECT[arr_shuffle[idxt]] == train_answer[idxt]) {
                         acc = get_accuracy_train();
                         $('#train_acc').val(acc);
-                        // alert("The test will start once this window is closed, get ready.\n");
                         $('#training').css("display", "none");
                         $('#triplet_show').css("display", "block");
                         window.scrollTo(0, document.body.scrollHeight);
@@ -678,11 +696,12 @@
                         if (idxt + 1 == TRAIN_CORRECT.length) {
                             $("#continue-train-btn").html('Continue');
                             $('#continue-train-btn').css("display", "block");
-                            $('#suggestion-train-div').css("display", "block");
-                            $('#suggestion-train-div').css("border", "2px solid #00ff19");
+                            // $('#suggestion-train-div').css("display", "block");
+                            // $('#suggestion-train-div').css("border", "2px solid #00ff19");
                             $('#suggestion-train-text').empty()
-
-                            $('#suggestion-train-text').append("<p> <h3>Great!</h3> You are done with the training part, the test will start after you press the <i>CONTINUE</i> button, get ready.</p><br>");
+                            $('#training-finished').css("display", "block");
+                            $('#training-finished-btn').css("display", "block");
+                            // $('#suggestion-train-text').append("<p> <h3>Great!</h3> You are done with the training part, the test will start after you press the <i>CONTINUE</i> button, get ready.</p><br>");
                             $('#img1-div').css("opacity", "0.3");
                             $('#img2-div').css("opacity", "0.3");
                             $('#img3-div').css("opacity", "0.3");

@@ -12,7 +12,7 @@ urls = ("/",  "Icons",
         "/end", "End")
 web.app = web.application(urls, globals())
 web.idx = 0
-web._HITS = 10
+web._HITS = 20
 # if web.config.get('_session') is None:
 #     store = web.session.DiskStore('sessions')
 #     session = web.session.Session(web.app, store, initializer={'count': 0, '_HITS':3})
@@ -43,11 +43,11 @@ class Icons:
 
         # build JSON from post method
         data = web.input()
-        print data
         json_output = {}
         json_output['assignmentId'] = data.assignmentId
         json_output['output'] = json.loads(data.output)
         json_output['train_acc'] = data.train_acc
+        json_output['easy_acc'] = data.easy_acc
         json_output['gen'] = data.gen
         json_output['gd_kwd'] = data.gd_kwd
         json_output['gui_kwd'] = data.gui_kwd

@@ -2,9 +2,9 @@
   "title": "Which image is more similar to the reference?",
   "description": "Decide which image is more similar to the Reference.",
   "keywords": "image, images, triplet, icons, style",
-  "reward": 0.2,
+  "reward": 0.1,
   "duration": 600,
   "frame_height": 1500,
-  "max_assignments": 10,
-  "percent_approved": 90
+  "max_assignments": 1,
+  "percent_approved": 95
 }

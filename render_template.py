@@ -31,4 +31,6 @@ if __name__ == '__main__':
 
     for i in range(len(html)):
         with open(os.path.join(output_dir, args.html_template.split(".")[0]) + "_" + str(i) + ".html", 'w') as f:
+            for j in range(350,500):
+                print j, html[i][j]
             f.write(html[i])
